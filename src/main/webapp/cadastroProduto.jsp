@@ -135,7 +135,7 @@
                         <div class="form-group col-12 text-center">
                             <label for="descricao">Descrição do Produto*</label>
                             <textarea rows="10" cols="140" id="txtareadescricao"
-                                required oninvalid="this.setCustomValidity('Preencha a Descrição')" oninput="setCustomValidity('')" maxlength="200"
+                                required oninvalid="this.setCustomValidity('Preencha a Descrição')" oninput="setCustomValidity('')" maxlength="1000"
                                 name="descricao" placeholder="descricao"></textarea>
                         </div>
                     </div>

@@ -75,5 +75,18 @@ public class ServicoUsuario {
             throw new DataSourceException("Erro na fonte de dados", e);
         }
     }
+     
+        //Exclui o cliente com ID informado do mock
+    public void excluirUsuario(int codigo) throws UsuarioException, DataSourceException, Exception {
+        try {
+            //Solicita ao DAO a exclusão do cliente informado
+            usuariodao.deletarUsuario(codigo);
+        } catch (Exception e) {
+            //Imprime qualquer erro técnico no console e devolve
+            //uma exceção e uma mensagem amigável a camada de visão
+            e.printStackTrace();
+            throw new DataSourceException("Erro na fonte de dados", e);
+        }
+    }
 
 }

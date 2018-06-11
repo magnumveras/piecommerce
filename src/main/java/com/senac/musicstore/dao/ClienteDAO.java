@@ -60,7 +60,7 @@ public class ClienteDAO {
         }
     }
     
-    public Cliente updateCliente(Cliente cliente, Integer codigo) throws Exception{
+    public Cliente updateCliente(Cliente cliente, Integer codigocliente, Integer codigousuario) throws Exception{
         System.out.println("Iniciando processo de atualização de cliente...");
          String query = "UPDATE cliente SET nome=?, sobrenome=?, sexo=?, rg=?, cpf=?, datanasc=?, telefone=?, email=?, "
                  + "endereco=?, numero=?, bairro=?, complemento=?, cidade=?, estado=?, cep=?, codigousuario=?, ofertas=? WHERE id=?";
@@ -84,9 +84,9 @@ public class ClienteDAO {
                 preparedStatement.setString(13, cliente.getCidade());
                 preparedStatement.setString(14, cliente.getEstado());
                 preparedStatement.setString(15, cliente.getCep());
-                preparedStatement.setInt(16, cliente.getCodigousuario());
+                preparedStatement.setInt(16, codigousuario);
                 preparedStatement.setBoolean(17, cliente.getOfertas());
-                preparedStatement.setInt(18, codigo);
+                preparedStatement.setInt(18, codigocliente);
                 
                 System.out.println("cpf: "+cliente.getCpf());
                 
@@ -372,16 +372,15 @@ public class ClienteDAO {
     }
     
     
-    public void deletarCliente(String cpf, int codigoempresa) throws Exception{
+    public void deletarCliente(String cpf) throws Exception{
         System.out.println("Deletando clientes de cpf: "+cpf);
-        String query = "DELETE FROM clientes WHERE cpf=? and codigoempresa=?";
+        String query = "DELETE FROM cliente WHERE cpf=?";
 
 
     try {
         PreparedStatement preparedStatement = conn.prepareStatement(query);
         preparedStatement.setString(1, cpf);
-        preparedStatement.setInt(2, codigoempresa);
-        
+      
         preparedStatement.execute();
         System.out.println("Cliente deletado");
     } catch (SQLException ex) {

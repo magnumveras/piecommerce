@@ -170,4 +170,21 @@ public class UsuarioDAO {
         }
 
     }
+    
+        public void deletarUsuario(int codigo) throws Exception{
+        System.out.println("Deletando usuário de código: "+codigo);
+        String query = "DELETE FROM usuario WHERE codigo=?";
+
+
+    try {
+        PreparedStatement preparedStatement = conn.prepareStatement(query);
+        preparedStatement.setInt(1, codigo);
+      
+        preparedStatement.execute();
+        System.out.println("Usuário deletado");
+    } catch (SQLException ex) {
+        throw new Exception("Erro ao deletar o usuário", ex);
+        
+    }
+    }
 }

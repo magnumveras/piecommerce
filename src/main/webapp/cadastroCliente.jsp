@@ -179,7 +179,7 @@
                         </c:if>
                         <c:if test="${empty loginexiste}">
                         <h5 class="blink" style="color: red"><c:out value="${loginexiste}"/></h5>
-                        </c:if> 
+                        </c:if>
                 </div>
             </div>
             <c:choose>
@@ -188,17 +188,19 @@
                     <div class="row">
                         <div class="form-group col-12 col-sm-3">
                             <label for="inputNome" >Nome*</label>
-                            <input name="nome" type="text" class="form-control" style="width: 100%;" id="inputNome" placeholder="Nome">
+                            <input  value="${cli.nome}" name="nome" type="text" class="form-control" style="width: 100%;" id="inputNome" placeholder="Nome"
+                                    required oninvalid="this.setCustomValidity('Preencha o nome')" oninput="setCustomValidity('')" maxlength="30">
                         </div> 
                         <div class="form-group col-12 col-sm-3">
                             <label for="inputNome" >Sobrenome*</label>
-                            <input name="sobrenome" type="text" class="form-control" style="width: 100%;" id="inputNome" placeholder="Nome">
+                            <input name="sobrenome" type="text" class="form-control" style="width: 100%;" id="inputNome" placeholder="Nome"
+                                   required oninvalid="this.setCustomValidity('Preencha o sobrenome')" oninput="setCustomValidity('')" maxlength="70">
                         </div>
                         <div class="form-group col-12 col-sm-3">
                             <label for="inputNome" >Sexo*</label>
                             <br>
                             <div class="form-check form-check-inline">
-                                <input class="form-check-input" type="radio" name="sexo" id="radioFeminino" value="f">Feminino
+                                <input class="form-check-input" type="radio" name="sexo" id="radioFeminino" value="f" checked>Feminino
                             </div>
                             <div class="form-check form-check-inline">
                                 <input class="form-check-input" type="radio" name="sexo" id="radioMasculino" value="m">Masculino
@@ -226,12 +228,13 @@
                         <div class="form-group col-12 col-sm-3">
                             <label for="inputUsuario">Usuário*</label>
                             <input type="text" class="form-control" style="width: 100%;" id="inputUsuario"
-                                name="usuario" placeholder="usuário">
+                                name="usuario" placeholder="usuário"
+                                required oninvalid="this.setCustomValidity('Preencha o usuário')" oninput="setCustomValidity('')" maxlength="20">
                         </div>
                         <div class="form-group col-12 col-sm-3">
                             <label for="inputSenha">Senha*</label>
                             <input type="password" class="form-control" style="width: 100%;" id="inputSenha"
-                               name="senha" placeholder="Senha">
+                               required oninvalid="this.setCustomValidity('Preencha a senha')" oninput="setCustomValidity('')" maxlength="20" name="senha" placeholder="Senha">
                         </div>
                     </div>
                     <div  class="row">
@@ -254,7 +257,7 @@
                         <div class="form-group col-12 col-sm-2">
                             <label for="numero">Número*</label>
                             <input name="numero" type="text" class="form-control" style="width: 100%;" id="numero"
-                            placeholder="Nº" size="10">
+                                   required oninvalid="this.setCustomValidity('Preencha o número')" oninput="setCustomValidity('')" maxlength="10" placeholder="Nº" size="10">
                         </div>
                     </div>
                     <div class="row">
@@ -266,7 +269,7 @@
                         <div class="form-group col-12 col-sm-3">
                             <label for="bairro">Bairro*</label>
                             <input name="bairro" type="text" class="form-control" style="width: 100%;" id="bairro"
-                                   placeholder="Bairro" size="40">
+                                   required oninvalid="this.setCustomValidity('Preencha o bairro')" oninput="setCustomValidity('')" maxlength="15" placeholder="Bairro" size="15">
                         </div>
                         <div class="form-group col-12 col-sm-3">
                             <label for="cidade">Cidade*</label>
@@ -330,11 +333,13 @@
                     <div class="row">
                         <div class="form-group col-12 col-sm-3">
                             <label for="inputNome" >Nome*</label>
-                            <input name="nome" value="${cli.nome}" type="text" class="form-control" style="width: 100%;" id="inputNome" placeholder="Nome">
+                            <input name="nome" value="${cli.nome}" type="text" class="form-control" style="width: 100%;" id="inputNome" placeholder="Nome"
+                                   required oninvalid="this.setCustomValidity('Preencha o nome')" oninput="setCustomValidity('')" maxlength="30">
                         </div> 
                         <div class="form-group col-12 col-sm-3">
                             <label for="inputNome" >Sobrenome*</label>
-                            <input name="sobrenome" value="${cli.sobrenome}" type="text" class="form-control" style="width: 100%;" id="inputNome" placeholder="Nome">
+                            <input name="sobrenome" value="${cli.sobrenome}" type="text" class="form-control" style="width: 100%;" id="inputNome" placeholder="Nome"
+                                   required oninvalid="this.setCustomValidity('Preencha o sobrenome')" oninput="setCustomValidity('')" maxlength="70">
                         </div>
                         <div class="form-group col-12 col-sm-3">
                             <c:set var="sexo" value="${cli.getSexo()}"/>
@@ -378,12 +383,14 @@
                         <div class="form-group col-12 col-sm-3">
                             <label for="inputUsuario">Usuário*</label>
                             <input type="text" class="form-control" style="width: 100%;" id="inputUsuario"
-                                   value="${usu.login}" name="usuario" placeholder="usuário">
+                                   value="${usu.login}" name="usuario" placeholder="usuário"
+                                   required oninvalid="this.setCustomValidity('Preencha o usuário')" oninput="setCustomValidity('')" maxlength="20">
                         </div>
                         <div class="form-group col-12 col-sm-3">
                             <label for="inputSenha">Senha*</label>
                             <input type="password" class="form-control" style="width: 100%;" id="inputSenha"
-                                   value="${usu.senha}" name="senha" placeholder="Senha">
+                                   value="${usu.senha}" name="senha" placeholder="Senha"
+                                   required oninvalid="this.setCustomValidity('Preencha a senha')" oninput="setCustomValidity('')" maxlength="20">
                         </div>
                     </div>
                     <div  class="row">
@@ -406,7 +413,8 @@
                         <div class="form-group col-12 col-sm-2">
                             <label for="numero">Número*</label>
                             <input name="numero" type="text" class="form-control" style="width: 100%;" id="numero"
-                                   value="${cli.numero}" placeholder="Nº" size="10">
+                                   value="${cli.numero}" placeholder="Nº" size="10"
+                                   required oninvalid="this.setCustomValidity('Preencha o número')" oninput="setCustomValidity('')" maxlength="10">
                         </div>
                     </div>
                     <div class="row">
@@ -418,7 +426,8 @@
                         <div class="form-group col-12 col-sm-3">
                             <label for="bairro">Bairro*</label>
                             <input name="bairro" type="text" class="form-control" style="width: 100%;" id="bairro"
-                                   value="${cli.bairro}" placeholder="Bairro" size="40">
+                                   value="${cli.bairro}" placeholder="Bairro" size="40"
+                                   required oninvalid="this.setCustomValidity('Preencha o bairro')" oninput="setCustomValidity('')" maxlength="15">
                         </div>
                         <div class="form-group col-12 col-sm-3">
                             <label for="cidade">Cidade*</label>

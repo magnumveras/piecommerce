@@ -30,9 +30,22 @@ public class AlterarClienteServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-          RequestDispatcher dispatcher
-	    = request.getRequestDispatcher("/cadastroCliente.jsp");
-    dispatcher.forward(request, response);
+         String destino;
+        
+        HttpSession sessao = request.getSession();
+        if (sessao.getAttribute("cliente") != null) {
+            request.setAttribute("cliente", sessao.getAttribute("cliente"));
+            // Remove o atributo da sessao para usuario nao ficar preso na tela de resultados
+            sessao.removeAttribute("cliente");
+            
+            destino = "/clientes";
+            sessao.removeAttribute("Altera");
+        } else {
+            destino = "cadastroCliente.jsp";
+        }
+        
+        RequestDispatcher dispatcher = request.getRequestDispatcher(destino);
+        dispatcher.forward(request, response);
     }
 
     @Override
@@ -157,15 +170,16 @@ public class AlterarClienteServlet extends HttpServlet {
                         cliente.setEstado(estado);
                         cliente.setCep(cep);
                         cliente.setOfertas(verificaofertas);
-              
-                        sc.atualizarCliente(cliente, cli.getId());
+                        
+                        
+                        sc.atualizarCliente(cliente, cli.getId(), cli.getCodigousuario());
                         sessao.removeAttribute("loginexiste");
+                        sessao.setAttribute("cliente", cliente);
                     } catch (Exception e) {
                     }
             
                 }
-                response.sendRedirect(request.getContextPath() + "/consultaCliente.jsp");
-                sessao.removeAttribute("Altera");
+                
             }else{
                 //Altera usuário
                     int codigousuario = 0;
@@ -197,20 +211,18 @@ public class AlterarClienteServlet extends HttpServlet {
                         cliente.setOfertas(verificaofertas);
                         cliente.setCodigousuario(usu.getCodigo());
               
-                        sc.atualizarCliente(cliente, cli.getId());
+                        sc.atualizarCliente(cliente, cli.getId(), cli.getCodigousuario());
                         sessao.removeAttribute("loginexiste");
+                        sessao.setAttribute("cliente", cliente);
                     } catch (Exception e) {
                     }
                     
-                response.sendRedirect(request.getContextPath() + "/consultaCliente.jsp");
-                sessao.removeAttribute("Altera");
             }
             
             
-            
         }
-        sessao.setAttribute("cli", cliente);
-        response.sendRedirect(request.getContextPath() + "/cadastroCliente.jsp");
+        
+        response.sendRedirect(request.getContextPath() + "/alterarCliente");
     }
 
 }

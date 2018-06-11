@@ -104,17 +104,32 @@ public class CadastrarClienteServlet extends HttpServlet {
         } catch (Exception e) {
         }
         
-        
-        
+                
         if(clienteexiste.getCpf() != null){
             sessao.setAttribute("cpfexiste", "CPF já cadastrado!");
+            sessao.removeAttribute("loginexiste");
         }else{
-            
             //Pega novo usuário
             novousuario.setCodigoperfil(3);
             novousuario.setNome(nome + " " + sobrenome);
             novousuario.setLogin(usuario);
             novousuario.setSenha(senha);
+            
+            if(telefone.length() == 0){
+                telefone = "";
+            }
+            
+            if(email.length() == 0){
+                email = "";
+            }
+            
+            if(nascimento.length() == 0){
+                nascimento = "";
+            }
+            
+            if(complemento.length() == 0){
+                complemento = "";
+            }
             
             //Verifica se usuário já existe
             Usuario u = new Usuario();
@@ -125,7 +140,8 @@ public class CadastrarClienteServlet extends HttpServlet {
             
             //Verifica se já existe login com o mesmo nome
             if(u.getLogin() != null){
-                sessao.setAttribute("loginexiste", "Login já cadastrado!");  
+                sessao.setAttribute("loginexiste", "Login já cadastrado!");
+                sessao.removeAttribute("cpfexiste");
             }else{
                 //Cadastra novo usuário caso ele não exista
                 int codigousuario = 0;
@@ -138,8 +154,7 @@ public class CadastrarClienteServlet extends HttpServlet {
                 }else{
                     novoCliente.setSexo("Feminino");
                 }
-         
-        
+                
                 novoCliente.setNome(nome);
                 novoCliente.setSobrenome(sobrenome);
                 novoCliente.setDatanascimento(nascimento);
@@ -154,8 +169,8 @@ public class CadastrarClienteServlet extends HttpServlet {
                 novoCliente.setCidade(cidade);
                 novoCliente.setCep(cep);
                 novoCliente.setEstado(estado);
-                novoCliente.setCodigousuario(codigousuario);
                 novoCliente.setOfertas(verificaofertas);
+                novoCliente.setCodigousuario(codigousuario);
                 
                 //Insere novo cliente
                 ClienteDAO clientedao = new ClienteDAO();
@@ -166,11 +181,9 @@ public class CadastrarClienteServlet extends HttpServlet {
                 sessao.setAttribute("cliente", novoCliente);
             }
         }
-         
-         
         
         response.sendRedirect(request.getContextPath() + "/cadastroCliente");
-        
+    
     }
     
 }

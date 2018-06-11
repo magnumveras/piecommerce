@@ -34,12 +34,12 @@ public class ServicoCliente {
     }
 
     //Atualiza um cliente na fonte de dados
-    public void atualizarCliente(Cliente cliente, int codigo) throws ClienteException, DataSourceException, Exception {
+    public void atualizarCliente(Cliente cliente, int codigocliente, int codigousuario) throws ClienteException, DataSourceException, Exception {
         
         //ValidadorCliente.validar(cliente);
 
         try {
-            clienteDAO.updateCliente(cliente, codigo);
+            clienteDAO.updateCliente(cliente, codigocliente, codigousuario);
         } catch (Exception e) {
             //Imprime qualquer erro técnico no console e devolve
             //uma exceção e uma mensagem amigável a camada de visão
@@ -88,10 +88,10 @@ public class ServicoCliente {
 
 
     //Exclui o cliente com ID informado do mock
-    public void excluirCliente(String cpf, int codigoempresa) throws ClienteException, DataSourceException, Exception {
+    public void excluirCliente(String cpf) throws ClienteException, DataSourceException, Exception {
         try {
             //Solicita ao DAO a exclusão do cliente informado
-            clienteDAO.deletarCliente(cpf, codigoempresa);
+            clienteDAO.deletarCliente(cpf);
         } catch (Exception e) {
             //Imprime qualquer erro técnico no console e devolve
             //uma exceção e uma mensagem amigável a camada de visão
