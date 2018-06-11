@@ -182,7 +182,13 @@ public class CadastrarClienteServlet extends HttpServlet {
             }
         }
         
-        response.sendRedirect(request.getContextPath() + "/cadastroCliente");
+        //Verifica se cadastro foi feito pelo operador
+        if(sessao.getAttribute("loginoperador") != null){
+          response.sendRedirect(request.getContextPath() + "/clientes");  
+        }else{
+          response.sendRedirect(request.getContextPath() + "/index.jsp");  
+        }
+        
     
     }
     

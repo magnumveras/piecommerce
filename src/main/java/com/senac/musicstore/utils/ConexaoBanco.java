@@ -14,7 +14,7 @@ public class ConexaoBanco {
         String url = "jdbc:mysql://localhost:3306/projetointegradoriv";
         try {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
-            Connection conn = DriverManager.getConnection(url, "root", "123456");
+            Connection conn = DriverManager.getConnection(url, "root", "");
             System.out.println("conectado");
             
             return conn;

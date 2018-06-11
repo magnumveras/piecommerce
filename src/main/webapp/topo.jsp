@@ -71,12 +71,6 @@
                     <c:if test="${(not empty loginoperacao) || (not empty logincliente)}">
                         <h6><c:out value=" Bem-vindo(a) ${perfilusuario.getNome()}"/></h6>
                     </c:if>
-                    <c:if test="${not empty logincliente}">
-                        &nbsp
-                        <form action="${pageContext.request.contextPath}/perfilcliente" method="Get">
-                            <button class="btn btn-outline-secondary" type="submit">Acesse seus dados</button>
-                        </form>
-                    </c:if>
                 </div>
             </div>
 
@@ -103,7 +97,7 @@
                                     
                             <div class="form-group col-md-12">
                                 <label for="senhaLogin">Senha</label>
-                                <input name="senha" type="text" class="form-control" id="senhaLogin"
+                                <input name="senha" type="password" class="form-control" id="senhaLogin"
                                     required oninvalid="this.setCustomValidity('Preencha a senha')" oninput="setCustomValidity('')" maxlength="30"
                                     accept=""placeholder="Senha" size="30" required>
                                  <c:if test="${not empty erro}">
@@ -112,7 +106,7 @@
                             </div>
                                     
                             <div class="novoUsu">
-                                <label>Novo usuário? <a th:href="@{/musicstore/cadastrocliente}">Criar cadastro</a></label>
+                                <label>Novo usuário? <a href="cadastroCliente.jsp">Criar cadastro</a></label>
                             </div>
                                     
                             <div class="modal-footer">
@@ -215,6 +209,26 @@
                           <li class="nav-item dropdown">
                             <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                               Relatórios
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
+            </nav>
+        </div>
+        </c:if>
+        <c:if test="${not empty logincliente}">
+        <div class="row">
+            <nav class="navbar navbar-expand navbar-light bg-light col-12">
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mr-auto">
+                          <li class="nav-item active">
+                            <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                              Compras
+                            </a>
+                          </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                              Dados
                             </a>
                           </li>
                         </ul>
