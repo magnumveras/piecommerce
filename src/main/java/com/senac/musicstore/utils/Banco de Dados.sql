@@ -34,6 +34,7 @@ CREATE TABLE Cliente (
     estado VARCHAR(2) NOT NULL,
     cep VARCHAR(9) NOT NULL,
     codigousuario INTEGER NOT NULL,
+    ofertas boolean NOT NULL,
     CONSTRAINT primary_keycli PRIMARY KEY (id),
     CONSTRAINT foreign_keycli FOREIGN KEY (codigousuario) REFERENCES Usuario(codigo)
 );
