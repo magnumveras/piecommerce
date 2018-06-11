@@ -171,20 +171,54 @@ public class UsuarioDAO {
 
     }
     
-        public void deletarUsuario(int codigo) throws Exception{
+    public void deletarUsuario(int codigo) throws Exception{
         System.out.println("Deletando usuário de código: "+codigo);
         String query = "DELETE FROM usuario WHERE codigo=?";
 
 
-    try {
-        PreparedStatement preparedStatement = conn.prepareStatement(query);
-        preparedStatement.setInt(1, codigo);
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, codigo);
       
-        preparedStatement.execute();
-        System.out.println("Usuário deletado");
-    } catch (SQLException ex) {
-        throw new Exception("Erro ao deletar o usuário", ex);
+                preparedStatement.execute();
+                System.out.println("Usuário deletado");
+            } catch (SQLException ex) {
+                throw new Exception("Erro ao deletar o usuário", ex);
         
+            }
     }
+    
+    //encontra usuário por código
+    public Usuario encontrarUsuario(String login, String senha){//retorna um item
+        List<Usuario> lista = new ArrayList<>();
+        Usuario usuario = new Usuario();
+        System.out.println("Buscando Usuário na base de dados...");
+        String query = "SELECT * FROM usuario WHERE login=? and senha=?";
+        
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            
+            preparedStatement.setString(1,login);
+            preparedStatement.setString(2,senha);
+
+            
+            ResultSet rs = preparedStatement.executeQuery();
+            if(rs.next()){
+                usuario.setCodigo(rs.getInt(1));
+                usuario.setNome(rs.getString(2));
+                usuario.setLogin(rs.getString(3));
+                usuario.setSenha(rs.getString(4));
+                usuario.setCodigoperfil(rs.getInt(5));
+                
+            }else{
+                return null;
+            }
+            
+            System.out.println("Busca efetuada com sucesso");
+        } catch (SQLException ex) {
+            System.out.println("Erro ao buscar usuario"+ex);
+            
+        }        
+        return usuario;
     }
 }

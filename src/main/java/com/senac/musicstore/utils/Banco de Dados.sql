@@ -282,6 +282,12 @@ INSERT INTO PERFIL (perfil)
 
 INSERT INTO PERFIL (perfil) 
 			VALUES ('Cliente');
+
+INSERT INTO USUARIO (nome, login, senha, codigoperfil)
+			VALUES ('Administrador', 'admin', 'admin', 2);
+            
+INSERT INTO USUARIO (nome, login, senha, codigoperfil)
+			VALUES ('Gerente', 'gerente', 'gerente', 1);
             
 
 SET @@global.time_zone = '+3:00';

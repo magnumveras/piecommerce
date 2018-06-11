@@ -17,7 +17,7 @@
         </style>
     </head>
     <jsp:include page="topo.jsp"/>        
-
+    <c:if test="${empty loginoperacao}">
     <section class="container">
             <div class="row">
                 <hr class="hr col-12">
@@ -54,6 +54,7 @@
                 
             </div>
     </section>
+    </c:if>
     <!--<nav aria-label="Page navigation example" class="pagination col-12 d-flex justify-content-center">
         <ul class="pagination">
             <li class="page-item disabled"><a class="page-link" href="#">Anterior</a></li>

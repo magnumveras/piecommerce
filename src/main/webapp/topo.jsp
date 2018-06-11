@@ -51,8 +51,32 @@
                 
                 <!--Botões superiores -->
                 <div class="btn btn-group">
-                    <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#exampleModalCenter"> Login </button>
+                    <c:if test="${not empty loginoperacao}">
+                        <form action="${pageContext.request.contextPath}/logout" method="Get">
+                            <button class="btn btn-danger" type="submit">Sair</button>
+                        </form>
+                    </c:if>
+                    <c:if test="${not empty logincliente}">
+                        <form action="${pageContext.request.contextPath}/logout" method="Get">
+                            <button class="btn btn-danger" type="submit">Sair</button>
+                        </form>
+                    </c:if>
+                    <c:if test="${(empty loginoperacao) && (empty logincliente)}">
+                        <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#exampleModalCenter"> Login </button>
+                    </c:if>
+                    <c:if test="${(empty loginoperacao)}">    
                     <button class="btn btn-outline-secondary" type="button" onclick="#" > Carrinho</button>
+                    </c:if>
+                    &nbsp
+                    <c:if test="${(not empty loginoperacao) || (not empty logincliente)}">
+                        <h6><c:out value=" Bem-vindo(a) ${perfilusuario.getNome()}"/></h6>
+                    </c:if>
+                    <c:if test="${not empty logincliente}">
+                        &nbsp
+                        <form action="${pageContext.request.contextPath}/perfilcliente" method="Get">
+                            <button class="btn btn-outline-secondary" type="submit">Acesse seus dados</button>
+                        </form>
+                    </c:if>
                 </div>
             </div>
 
@@ -69,16 +93,22 @@
                         </div>
                                 
                         <div class="modal-body">
+                            <form action="${pageContext.request.contextPath}/login" method="post">
                             <div class="form-group col-md-12">
                                 <label for="usuarioLogin">Usuário</label>
-                                <input name="usuarioLogin" type="text" class="form-control" id="usuarioLogin"
+                                <input name="usuario" type="text" class="form-control" id="usuarioLogin"
+                                    required oninvalid="this.setCustomValidity('Preencha o Usuário')" oninput="setCustomValidity('')" maxlength="30"
                                     placeholder="Usuário" size="30" required>
                             </div>
                                     
                             <div class="form-group col-md-12">
                                 <label for="senhaLogin">Senha</label>
-                                <input name="senhaLogin" type="text" class="form-control" id="senhaLogin"
+                                <input name="senha" type="text" class="form-control" id="senhaLogin"
+                                    required oninvalid="this.setCustomValidity('Preencha a senha')" oninput="setCustomValidity('')" maxlength="30"
                                     accept=""placeholder="Senha" size="30" required>
+                                 <c:if test="${not empty erro}">
+                                    <h5 class="blink" style="color: red"><c:out value="${erro}"/></h5>
+                                </c:if>
                             </div>
                                     
                             <div class="novoUsu">
@@ -89,12 +119,13 @@
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                 <button type="submit" class="btn btn-primary" >Entrar</button>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div> 
- 
+        <c:if test="${empty loginoperacao}">                    
         <div class="row">
            <nav class="navbar navbar-expand navbar-light bg-light col-12" id="menuprincipal">
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -147,7 +178,8 @@
                     </div>
                 </nav>
         </div>
-   
+        </c:if>
+        <c:if test="${not empty loginoperacao}">
         <div class="row">
             <nav class="navbar navbar-expand navbar-light bg-light col-12">
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -189,7 +221,8 @@
                       </div>
             </nav>
         </div>
-            
+        </c:if>
+        <c:if test="${empty loginoperacao}">
             <div class="row">
                 <div id="carouselExampleIndicators" class="carousel slide col-12" data-ride="carousel">
                     <h2 style="display: none">Validação w3</h2>
@@ -221,6 +254,7 @@
                     </a>
                 </div>
             </div>
+        </c:if>
     </div>
   </body>
 </html>

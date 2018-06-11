@@ -88,5 +88,16 @@ public class ServicoUsuario {
             throw new DataSourceException("Erro na fonte de dados", e);
         }
     }
+    
+        //Pesquisa usuario por login e senha 
+    public Usuario retornaUsuarioLogin(String login, String senha) throws UsuarioException, DataSourceException{
+        try {
+            return usuariodao.encontrarUsuario(login, senha);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DataSourceException("Erro na fonte de dados", e);
+        }
+    }
 
 }
