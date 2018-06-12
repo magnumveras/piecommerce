@@ -75,10 +75,10 @@ public class ServicoCliente {
     }
     
     //Realiza a pesquisa de um cliente por nome na fonte de dados
-    public Cliente obterClientePorCodigo(int codigo, int codigoempresa) throws ClienteException, DataSourceException, Exception {
+    public Cliente obterClientePorCodigoUsuario(int codigo) throws ClienteException, DataSourceException, Exception {
         try {
           
-                return clienteDAO.encontrarClientePorIdCarrinho(codigo, codigoempresa);
+                return clienteDAO.encontrarClientePorCodigoUsuario(codigo);
          
         } catch (Exception e) {
             e.printStackTrace();

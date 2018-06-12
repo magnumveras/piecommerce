@@ -5,10 +5,16 @@
  */
 package com.senac.musicstore.servlets;
 
+import com.senac.musicstore.model.Carrinho;
+import com.senac.musicstore.model.Cliente;
 import com.senac.musicstore.model.Usuario;
+import com.senac.musicstore.service.ServicoCarrinho;
+import com.senac.musicstore.service.ServicoCliente;
+import com.senac.musicstore.service.ServicoItemCarrinho;
 import com.senac.musicstore.service.ServicoUsuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Timestamp;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -41,7 +47,10 @@ public class LoginServlet extends HttpServlet {
         Usuario verifica = new Usuario();
         Usuario usuarioperil = new Usuario();
         ServicoUsuario su = new ServicoUsuario();
+        ServicoCliente sc = new ServicoCliente();
+        ServicoCarrinho scar = new ServicoCarrinho();
         HttpSession sessao = request.getSession();
+        int codigocarrinho = 0;
         
         String usuario = request.getParameter("usuario");
         String senha = request.getParameter("senha");
@@ -70,6 +79,30 @@ public class LoginServlet extends HttpServlet {
                 
                 //Envia perfil de usuário para as páginas
                 sessao.setAttribute("perfilusuario", usuarioperil);
+                
+                Carrinho carrinho = new Carrinho();
+                Cliente cliente = new Cliente();
+                
+                try {
+                    cliente = sc.obterClientePorCodigoUsuario(usuarioperil.getCodigo());
+                } catch (Exception e) {
+                }
+                
+                carrinho.setCliente(cliente.getId());
+                
+                Timestamp dataDeHoje = new Timestamp(System.currentTimeMillis());
+                carrinho.setData(dataDeHoje);
+                carrinho.setValorTotal(0.00);
+                
+                try {
+                   codigocarrinho = scar.cadastrarCarrinho(carrinho);
+                } catch (Exception e) {
+                }
+                
+                sessao.setAttribute("carrinhocliente", carrinho);
+                sessao.setAttribute("codigocarrinho", codigocarrinho);
+                sessao.setAttribute("clientecarrinho", cliente);
+                
                 response.sendRedirect(request.getContextPath() + "/index.jsp");
                 sessao.removeAttribute("erro");
             }else{

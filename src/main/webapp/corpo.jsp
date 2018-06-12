@@ -37,19 +37,22 @@
                         <hr style="color: gainsboro; background-color: gainsboro; height: 3px">
                         <div class="card-text" style="min-height: 70px;">
                             <p class="card-title d-flex justify-content-center"><c:out value="${produto.nome}"/></p>
-                            
                         </div>
                         <div class="card-text text-center">
-                            <h6 class="card-text d-flex justify-content-center"><c:out value="R$ ${produto.precovenda/0.1}"/></h6>
-                            <h6>Parcelado em até 10x sem juros de <c:out value="R$ ${produto.precovenda}"/></h6>
+                            <h6 class="card-text d-flex justify-content-center"><c:out value="R$ ${produto.precovenda}"/></h6>
+                            <h6>Parcelado em até 10x sem juros de <c:out value="R$ ${produto.precovenda/10}"/></h6>
                         </div>
                         <br>
                         <div class="card-text">
-                            <a href="#" class="btn btn-primary d-flex justify-content-center">&ensp;Add ao Carrinho</a>
+                            <c:if test="${produto.estoque > 0}">
+                                <a href="inserircarrinho?&produto=<c:out value='${produto.codigo}'/>" class="btn btn-primary d-flex justify-content-center">&ensp;Add ao Carrinho</a>
+                            </c:if>
+                            <c:if test="${produto.estoque == 0}">
+                                <h6 align="center">Produto Indisponível</h6>
+                            </c:if>
                         </div>
-                         </form>
+                        </form>
                 </div>
-                   
                 </c:forEach>
                 
             </div>

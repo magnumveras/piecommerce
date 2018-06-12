@@ -331,36 +331,39 @@ public class ClienteDAO {
         return cliente;
     }
         
-        public Cliente encontrarClientePorId(int id) throws Exception{
+        public Cliente encontrarClientePorCodigoUsuario(int codigo) throws Exception{
         System.out.println("Iniciando listagem de cliente...");
         
         Cliente cliente = new Cliente();
-        String query = "SELECT * FROM clientes WHERE id=?";
+        String query = "SELECT * FROM cliente WHERE codigousuario=?";
 
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString(1,String.valueOf(id));
+            preparedStatement.setInt(1,codigo);
             
             ResultSet rs = preparedStatement.executeQuery();
             
             System.out.println("Busca efetuada com sucesso");
             
             while (rs.next()){
-                cliente.setId(rs.getInt(1));
-                cliente.setNome(rs.getString(2));
-                cliente.setSobrenome(rs.getString(3));
-                cliente.setSexo(rs.getString(4));
-                cliente.setCpf(rs.getString(5));
-                cliente.setRg(rs.getString(6));            
-                cliente.setIdade(rs.getString(7));                
-                cliente.setTelefone(rs.getString(8));
-                cliente.setEmail(rs.getString(10));
-                cliente.setEndereco(rs.getString(11));
-                cliente.setNumero(rs.getString(12));
-                cliente.setComplemento(rs.getString(13));
-                cliente.setCidade(rs.getString(14));
-                cliente.setEstado(rs.getString(15));
-                cliente.setCep(rs.getString(17));
+                cliente.setId(rs.getInt("id"));
+                cliente.setNome(rs.getString("nome"));
+                cliente.setSobrenome(rs.getString("sobrenome"));
+                cliente.setSexo(rs.getString("sexo"));
+                cliente.setCpf(rs.getString("cpf"));
+                cliente.setRg(rs.getString("rg"));            
+                cliente.setIdade(rs.getString("datanasc"));                
+                cliente.setTelefone(rs.getString("telefone"));
+                cliente.setEmail(rs.getString("email"));
+                cliente.setEndereco(rs.getString("endereco"));
+                cliente.setNumero(rs.getString("numero"));
+                cliente.setBairro(rs.getString("bairro"));
+                cliente.setComplemento(rs.getString("complemento"));
+                cliente.setCidade(rs.getString("cidade"));
+                cliente.setEstado(rs.getString("estado"));
+                cliente.setCep(rs.getString("cep"));
+                cliente.setCodigousuario(rs.getInt("codigousuario"));
+                cliente.setOfertas(rs.getBoolean("ofertas"));
             }
             
         } catch (SQLException ex) {

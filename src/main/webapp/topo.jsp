@@ -65,7 +65,7 @@
                         <button class="btn btn-outline-secondary" type="button" data-toggle="modal" data-target="#exampleModalCenter"> Login </button>
                     </c:if>
                     <c:if test="${(empty loginoperacao)}">    
-                    <button class="btn btn-outline-secondary" type="button" onclick="#" > Carrinho</button>
+                    <a class="btn btn-outline-secondary" href="carrinho.jsp">Carrinho</a>
                     </c:if>
                     &nbsp
                     <c:if test="${(not empty loginoperacao) || (not empty logincliente)}">
@@ -124,36 +124,36 @@
            <nav class="navbar navbar-expand navbar-light bg-light col-12" id="menuprincipal">
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         
-                        <ul class="navbar-nav mr-auto col-12 col-sm-8">
-                            <li class="nav-item active">
+                        <ul class="navbar-nav mr-auto">
+                            <li class="nav-item active col-12 col-sm-2">
                                 <a class="nav-link"  href="index.jsp">Home <span class="sr-only">(current)</span></a>
                             </li>
-                            <li for="categoria" class="nav-item dropdown">
+                            <li for="categoria" class="nav-item dropdown col-12 col-sm-2">
                                 
                                 <a class="nav-link" role="button" name="categoria"
                                    href="consultaporcategoria?&categoria=1">
                                     Áudio Profissional
                                 </a>
                             </li>
-                            <li for="categoria" class="nav-item dropdown">
+                            <li for="categoria" class="nav-item dropdown col-12 col-sm-2">
                                 <a class="nav-link" name="categoria" role="button"
                                    href="consultaporcategoria?&categoria=2">
                                     Bateria & Percussão
                                 </a>
                             </li>
-                            <li for="categoria" class="nav-item dropdown">
+                            <li for="categoria" class="nav-item dropdown col-12 col-sm-2">
                                 <a class="nav-link" name="categoria" role="button" 
                                    href="consultaporcategoria?&categoria=3">
                                     Cordas & Acessórios
                                 </a>
                             </li>
-                            <li for="categoria" class="nav-item dropdown">
+                            <li for="categoria" class="nav-item dropdown col-12 col-sm-2">
                                 <a class="nav-link" name="categoria" role="button"
                                    href="consultaporcategoria?&categoria=4">
                                     Pianos & Teclados
                                 </a>
                             </li>
-                            <li for="categoria" class="nav-item dropdown">
+                            <li for="categoria" class="nav-item dropdown col-12 col-sm-2">
                                 <a class="nav-link" name="categoria" role="button"
                                    href="consultaporcategoria?&categoria=5">
                                     Sopro
