@@ -28,7 +28,7 @@
                 <div class="col-12 col-sm-3 colcard-deck fixedHeightProd" id="produtobuscar">
                         <form class="form-group">
                         <figure id="teste">
-                            <a href="#" class="d-flex justify-content-center">
+                            <a href="consultadetalhes?&produto=<c:out value='${produto.codigo}'/>" class="d-flex justify-content-center">
                                 <img id="figura" class="card-img"
                                 src="imagens/martin-d-100.jpg"
                                 alt="Violão Martin D-100">
