@@ -67,13 +67,14 @@ public class CarrinhoDAO {
     }
     
     //Altera valor total do carrinho
-    public void alterarValor(double valor) throws Exception{
-        String query = "UPDATE carrinho SET valortotal= ?";
+    public void alterarValor(double valor, int codigo) throws Exception{
+        String query = "UPDATE carrinho SET valortotal= ? where codigo = ?";
 
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             preparedStatement.setDouble(1, valor);
-
+            preparedStatement.setInt(2, codigo);
+             
             preparedStatement.execute();
             System.out.println("Valor Alterado");
         } catch (SQLException ex) {
@@ -106,5 +107,32 @@ public class CarrinhoDAO {
           
         return carrinho;
        
+    }
+
+    public Carrinho retornaCarrinhoPorClienteData(int codigoCliente, String data) throws Exception {
+        String query = " Select * from carrinho WHERE codigocliente = ? and datacarrinho like ?";
+         Carrinho carrinho = new Carrinho();
+         
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            
+            preparedStatement.setInt(1, codigoCliente);
+            preparedStatement.setTimestamp(2, Timestamp.valueOf(data+"%"));
+            
+            ResultSet rs = preparedStatement.executeQuery();
+            
+            while (rs.next()){
+                carrinho.setCodigo(rs.getInt(1));
+                carrinho.setCliente(rs.getInt(2));
+                carrinho.setData(rs.getTimestamp(3));
+                carrinho.setValorTotal(rs.getDouble(4));
+          
+            }
+
+        } catch (SQLException ex) {
+            throw new Exception("Erro ao listar carrinho", ex);
+        }
+          
+        return carrinho;
     }
 }

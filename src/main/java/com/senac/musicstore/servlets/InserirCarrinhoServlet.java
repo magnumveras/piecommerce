@@ -41,25 +41,24 @@ public class InserirCarrinhoServlet extends HttpServlet {
         ServicoCarrinho sc = new ServicoCarrinho();
         ServicoItemCarrinho sic = new ServicoItemCarrinho();
         ServicoProduto sp = new ServicoProduto();
-        ServicoCliente scli = new ServicoCliente();
-        
         Carrinho carrinho = new Carrinho();
-        Carrinho carrinhomock = new Carrinho();
         ItemCarrinho itemcarrinho = new ItemCarrinho();
-        Cliente cliente = new Cliente();
-
         List<ItemCarrinho> listaitens= new ArrayList<ItemCarrinho>();  
-
-        
         List<ItemCarrinho> listaitenscadastrado= new ArrayList<ItemCarrinho>();
         List<Produto> listaprodutos = new ArrayList<Produto>();
-        List<Cliente> listaclientes = new ArrayList<Cliente>();
+        
+        //Limpa aviso de sem estoque
+        if(sessao.getAttribute("semestoque") != null){
+            sessao.removeAttribute("semestoque");
+        }
+ 
         
         Produto produto = new Produto();
         
         String codigoproduto = request.getParameter("produto");
         
         try {
+            //Captura produto clicado na tela
             produto = sp.encontrarProdutoPorCodigo(Integer.parseInt(codigoproduto));
         } catch (Exception e) {
         }
@@ -67,54 +66,86 @@ public class InserirCarrinhoServlet extends HttpServlet {
         String qtd = request.getParameter("quantidade");
         int quantidade = 0;
         
+        //Verifica se quantidade veio da tela principal ou da tela de detalhes onde é possível escolher um quantidade maior do que 1;
         if(qtd == null){
             quantidade = 1;
         }else{
             quantidade = Integer.parseInt(qtd);
         }
         
-        carrinho = (Carrinho) sessao.getAttribute("carrinhocliente");
-        
-        if(carrinho != null){
-            try {
-                sic.cadastraritemCarrinho(carrinho.getCodigo(), produto.getCodigo(), quantidade);
-                listaitenscadastrado = sic.listarItensCarrinho(carrinho.getCodigo());
-                listaprodutos = sp.listarProdutostotais();
-            } catch (Exception e) {
-            }
+        //Verifica se quantidade tem disponível em estoque para produto em questão.
+        if(produto.getEstoque() < quantidade){
+            //Caso não existe disponibilidade em estoque envia para tela principal aviso.
+            sessao.setAttribute("semestoque", "Quantidade indisponível!");
+            response.sendRedirect(request.getContextPath() + "/index.jsp");
         }else{
-            try {
-                listaprodutos = sp.listarProdutostotais();
-            } catch (Exception e) {
-            }
+            carrinho = (Carrinho) sessao.getAttribute("carrinhocliente");
             
-            itemcarrinho.setProduto(produto.getCodigo());
-            itemcarrinho.setQuantidade(quantidade);
-            
-            //Verifica se carrinho sem cliente já não existe
-            if(sessao.getAttribute("carrinhoiniciado") != null){
-               List<ItemCarrinho> list = new ArrayList<ItemCarrinho>();
-               list = (List<ItemCarrinho>) sessao.getAttribute("itenscarrinho");
-               
-               for(int i = 0; i < list.size(); i++){
-                   listaitens.add(list.get(i));
-               }
-               
-               sessao.removeAttribute("itenscarrinho");
-               listaitens.add(itemcarrinho);
+            //Verifica se existe login de algum cliente no carrinho, senão inicia carrinho sem cadastro de itemcarrinho e cliente.
+            if(carrinho != null){
+                    try {
+                        sic.cadastraritemCarrinho(carrinho.getCodigo(), produto.getCodigo(), quantidade);
+                        listaitenscadastrado = sic.listarItensCarrinho(carrinho.getCodigo());
+                        listaprodutos = sp.listarProdutostotais();
+                    } catch (Exception e) {
+                    }
             }else{
-               listaitens.add(itemcarrinho); 
-            }
+                try {
+                    listaprodutos = sp.listarProdutostotais();
+                } catch (Exception e) {
+                }
+            
+                itemcarrinho.setProduto(produto.getCodigo());
+                itemcarrinho.setQuantidade(quantidade);
+            
+                //Verifica se carrinho sem cliente já não existe
+                if(sessao.getAttribute("carrinhoiniciado") != null){
+                    List<ItemCarrinho> list = new ArrayList<ItemCarrinho>();
+                    list = (List<ItemCarrinho>) sessao.getAttribute("itenscarrinho");
+                    boolean verifica = false;
+                    int codigo = 0;
+                    
+                    //Laço para verificação de produtos já lançados
+                    for(int i = 0; i < list.size(); i++){
+                        listaitens.add(list.get(i));
+                    }
+                    
+                    //Laço para verificação de produto já presente em lista
+                    for(int i = 0; i < listaitens.size(); i++){
+                        if(listaitens.get(i).getProduto() == itemcarrinho.getProduto()){
+                            verifica = true;
+                            codigo = itemcarrinho.getProduto();
+                        }
+                    }
+                    
+                    sessao.removeAttribute("itenscarrinho");
+                    
+                    //Verifica se produto já existe e acrescenta em quantidade
+                    if(verifica == true){
+                        for(int i = 0; i < listaitens.size(); i++){
+                        if(listaitens.get(i).getProduto() == itemcarrinho.getProduto()){
+                            listaitens.get(i).setQuantidade(listaitens.get(i).getQuantidade() + quantidade);
+                        }
+                    }
+                    }else{
+                       listaitens.add(itemcarrinho); 
+                    }
+                    
+                }else{
+                    listaitens.add(itemcarrinho); 
+                }
                        
+            }
+        
+            sessao.setAttribute("cabecalhocarrinho", carrinho);
+            sessao.setAttribute("itenscarrinhocadastrado", listaitenscadastrado);
+            sessao.setAttribute("itenscarrinho", listaitens);
+            sessao.setAttribute("listaprodutos", listaprodutos);
+            sessao.setAttribute("carrinhoiniciado", "ok");
+
+            response.sendRedirect(request.getContextPath() + "/carrinho.jsp");    
         }
         
-        sessao.setAttribute("cabecalhocarrinho", carrinho);
-        sessao.setAttribute("itenscarrinhocadastrado", listaitenscadastrado);
-        sessao.setAttribute("itenscarrinho", listaitens);
-        sessao.setAttribute("listaprodutos", listaprodutos);
-        sessao.setAttribute("carrinhoiniciado", "ok");
-
-        response.sendRedirect(request.getContextPath() + "/carrinho.jsp");   
     }
 
    

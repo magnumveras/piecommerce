@@ -5,16 +5,25 @@
  */
 package com.senac.musicstore.servlets;
 
+import com.senac.musicstore.exceptions.DataSourceException;
+import com.senac.musicstore.exceptions.ProdutoException;
 import com.senac.musicstore.model.Carrinho;
 import com.senac.musicstore.model.Cliente;
+import com.senac.musicstore.model.ItemCarrinho;
+import com.senac.musicstore.model.Produto;
 import com.senac.musicstore.model.Usuario;
 import com.senac.musicstore.service.ServicoCarrinho;
 import com.senac.musicstore.service.ServicoCliente;
 import com.senac.musicstore.service.ServicoItemCarrinho;
+import com.senac.musicstore.service.ServicoProduto;
 import com.senac.musicstore.service.ServicoUsuario;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.RequestDispatcher;
@@ -49,7 +58,12 @@ public class LoginServlet extends HttpServlet {
         ServicoUsuario su = new ServicoUsuario();
         ServicoCliente sc = new ServicoCliente();
         ServicoCarrinho scar = new ServicoCarrinho();
+        ServicoItemCarrinho sic = new ServicoItemCarrinho();
+        ServicoProduto sp = new ServicoProduto();
         HttpSession sessao = request.getSession();
+        List<ItemCarrinho> listaitens = new ArrayList<ItemCarrinho>();
+        List<ItemCarrinho> itenscadastrados = new ArrayList<ItemCarrinho>();
+        List<Produto> listaprodutos = new ArrayList<Produto>();
         int codigocarrinho = 0;
         
         String usuario = request.getParameter("usuario");
@@ -63,6 +77,7 @@ public class LoginServlet extends HttpServlet {
                 
             //Retorna usuário completo para verificar perfil do mesmo
             usuarioperil = su.retornaUsuarioLogin(u.getLogin(), u.getSenha());
+            listaprodutos = sp.listarProdutostotais();
         } catch (Exception e) {
                 
             
@@ -88,20 +103,86 @@ public class LoginServlet extends HttpServlet {
                 } catch (Exception e) {
                 }
                 
-                carrinho.setCliente(cliente.getId());
-                
                 Timestamp dataDeHoje = new Timestamp(System.currentTimeMillis());
-                carrinho.setData(dataDeHoje);
-                carrinho.setValorTotal(0.00);
                 
+                Timestamp datah = new Timestamp(System.currentTimeMillis());
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");  
+                String data = format.format(datah.getTime()); 
+
                 try {
-                   codigocarrinho = scar.cadastrarCarrinho(carrinho);
+                    carrinho = scar.consultaCarrinhoPorClienteData(cliente.getId(), data);
                 } catch (Exception e) {
                 }
                 
-                sessao.setAttribute("carrinhocliente", carrinho);
+                //////////////////////////////*********************////////////////////////////////////////////////////////
+                //Verifica se já não existe carrinho cadastrado para cliente em questão
+                if(carrinho.getCodigo() != null){
+                    try {
+                       listaitens = sic.listarItensCarrinho(carrinho.getCodigo());
+                     
+                    } catch (Exception e) {
+                    }
+                    
+                }else{
+                    carrinho.setCliente(cliente.getId());
+                    carrinho.setData(dataDeHoje);
+                    Double valor = 0.0;
+                    
+                    carrinho.setValorTotal(valor);
+                
+                    try {
+                        codigocarrinho = scar.cadastrarCarrinho(carrinho);
+                    } catch (Exception e) {
+                    }
+                
+                    //Verifica se carrinho já foi iniciado sem cliente
+                    if(sessao.getAttribute("carrinhoiniciado") != null){
+                        listaitens = (List<ItemCarrinho>) sessao.getAttribute("itenscarrinho");
+                        for(int i = 0; i < listaitens.size(); i++){
+                            try {
+                                sic.cadastraritemCarrinho(codigocarrinho, listaitens.get(i).getProduto(), listaitens.get(i).getQuantidade());
+                            } catch (Exception e) {
+                            }
+                        }
+                    }
+                    
+                    //Recebe itens cadastrados no carrinho
+                    try {
+                        itenscadastrados = sic.listarItensCarrinho(codigocarrinho);
+                    } catch (Exception e) {
+                    }
+                    
+                    //Calcular Valor Total do Carrinho e se coloca no carrinho
+                    double soma = 0;
+                    for(int i = 0; i < itenscadastrados.size(); i++){
+                        Produto p = new Produto();
+                        int codigoproduto = itenscadastrados.get(i).getProduto();
+                        int quantidade = itenscadastrados.get(i).getQuantidade();
+                        
+                        try {
+                            p = sp.encontrarProdutoPorCodigo(codigoproduto);
+                        } catch (Exception e) {
+                        }
+                        
+                        soma += p.getPrecovenda() * quantidade;
+                    }
+                    
+                    try {
+                        scar.alteraValorCarrinho(soma, codigocarrinho);
+                        carrinho = scar.retornaCarrinho(codigocarrinho);
+                    } catch (Exception e) {
+                    }
+                    
+                }
+                
+                
+                sessao.removeAttribute("itenscarrinho");
+                sessao.removeAttribute("carrinhoiniciado");
+                sessao.setAttribute("carrinhocadastrado", carrinho);
                 sessao.setAttribute("codigocarrinho", codigocarrinho);
                 sessao.setAttribute("clientecarrinho", cliente);
+                sessao.setAttribute("listacarrinhocadastrado", itenscadastrados);
+                sessao.setAttribute("listaprodutos", listaprodutos);
                 
                 response.sendRedirect(request.getContextPath() + "/index.jsp");
                 sessao.removeAttribute("erro");

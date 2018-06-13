@@ -11,6 +11,7 @@ import com.senac.musicstore.exceptions.DataSourceException;
 import com.senac.musicstore.exceptions.ItemCarrinhoException;
 import com.senac.musicstore.model.Carrinho;
 import com.senac.musicstore.model.validador.ValidadorCarrinho;
+import java.sql.Timestamp;
 import java.util.List;
 /**
  *
@@ -22,7 +23,7 @@ public class ServicoCarrinho {
     
        //Insere um Produto na fonte de dados Carrinho
     public Integer cadastrarCarrinho(Carrinho carrinho) throws CarrinhoException, DataSourceException, ItemCarrinhoException, Exception{
-
+        
         ValidadorCarrinho.validar(carrinho);
 
         try {
@@ -45,11 +46,11 @@ public class ServicoCarrinho {
         }
     }
    //Exclui carrinho e dados do topo do carrinho
-    public void alteraValorCarrinho(Double valor) throws CarrinhoException, DataSourceException, ItemCarrinhoException, Exception{
+    public void alteraValorCarrinho(Double valor, int codigo) throws CarrinhoException, DataSourceException, ItemCarrinhoException, Exception{
 
 
         try {
-            carrinhoDAO.alterarValor(valor);
+            carrinhoDAO.alterarValor(valor, codigo);
         } catch (Exception e) {
             e.printStackTrace();
             throw new DataSourceException("Erro na fonte de dados", e);
@@ -62,6 +63,17 @@ public class ServicoCarrinho {
 
         try {
             return carrinhoDAO.retornaCarrinho(codigocarrinho);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DataSourceException("Erro na fonte de dados", e);
+        }
+    }
+   
+    //Retorna Carrinho
+   public Carrinho consultaCarrinhoPorClienteData(int codigoCliente, String data) throws CarrinhoException, DataSourceException, ItemCarrinhoException, Exception{
+
+        try {
+            return carrinhoDAO.retornaCarrinhoPorClienteData(codigoCliente, data);
         } catch (Exception e) {
             e.printStackTrace();
             throw new DataSourceException("Erro na fonte de dados", e);

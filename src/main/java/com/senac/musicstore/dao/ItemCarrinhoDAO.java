@@ -27,7 +27,7 @@ public class ItemCarrinhoDAO {
     
     //Cadastra item em determinado carrinho
     public void cadastrarItemCarrinho(int codigocarrinho, int codigoproduto, int quantidade){
-                 String query = " insert into itemcarrinho (codigocarrinho, codigoproduto, quantidade )"
+                 String query = " insert into itemcarrinho (codigocarrinho, codigoproduto, quantidade)"
         + " values (?, ?, ?)";
         
         
@@ -110,6 +110,32 @@ public class ItemCarrinhoDAO {
         }        
         return lista;
     
+    }
+    
+        //atualiza Item do Carrinho
+    public ItemCarrinho updateItemCarrinho(ItemCarrinho ItemCarrinho) throws Exception{
+        System.out.println("Atualizando produto...");
+         String query = "UPDATE itemcarrinho SET codigocarrinho=?, codigoproduto=?, quantidade=? WHERE codigo=?";
+        
+        
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            
+            
+            preparedStatement.setInt(1, ItemCarrinho.getCodigoCarrinho());
+            preparedStatement.setInt(2, ItemCarrinho.getProduto());
+            preparedStatement.setInt(3, ItemCarrinho.getQuantidade());
+            preparedStatement.setInt(4, ItemCarrinho.getCodigo());
+
+            
+            preparedStatement.executeUpdate();
+            preparedStatement.close();
+        } catch (SQLException ex) {
+            System.out.println("Erro ao atualizar produto");
+            throw new Exception("Erro ao atualizar produto", ex);
+        }
+
+        return ItemCarrinho;
     }
     
     
