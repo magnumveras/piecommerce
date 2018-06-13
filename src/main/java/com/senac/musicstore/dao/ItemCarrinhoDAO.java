@@ -63,16 +63,16 @@ public class ItemCarrinhoDAO {
     }
     
     //Deleta item de determinado carrinho
-    public void deletarItemCarrinho(int codigocarrinho, int codigoitem) throws Exception{
-            System.out.println("Deletando item codigo: "+codigoitem);
-            String query = "DELETE FROM itemcarrinho WHERE codigocarrinho=? and codigo=?";
+    public void deletarItemCarrinho(int codigocarrinho, int codigoproduto) throws Exception{
+            System.out.println("Deletando item codigo: "+codigoproduto);
+            String query = "DELETE FROM itemcarrinho WHERE codigocarrinho=? and codigoproduto=?";
         
         
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(query);
             
             preparedStatement.setInt(1, codigocarrinho); 
-             preparedStatement.setInt(2, codigoitem); 
+             preparedStatement.setInt(2, codigoproduto); 
             preparedStatement.execute();
             
             System.out.println("ItemCarrinho deletado");

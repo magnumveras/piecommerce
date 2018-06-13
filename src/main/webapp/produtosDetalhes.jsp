@@ -28,7 +28,8 @@
                 <label><c:out value="${produtodetalhes.descricao}" /></label>
                 
                 <div class="form-inline">
-                <form action="${pageContext.request.contextPath}/adicionarcarrinho" method="post">
+                <form action="${pageContext.request.contextPath}/inserircarrinho" method="get">
+                    <input type="hidden" name="produto" value="${produtodetalhes.getCodigo()}">
                     <input type="number" size="4" name="quantidade"
                            required oninvalid="this.setCustomValidity('Preencha a Quantidade')" oninput="setCustomValidity('')" 
                            onkeydown="javascript: fMasc(this, mNum)" maxlength="5"/>&ensp;Qtd

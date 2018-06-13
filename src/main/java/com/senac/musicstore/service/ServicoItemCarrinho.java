@@ -42,10 +42,10 @@ public class ServicoItemCarrinho {
     }
     
     //Exclui carrinho e dados do topo do carrinho
-    public void excluiritemCarrinho(int codigocarrinho, int codigoitem) throws CarrinhoException, DataSourceException, ItemCarrinhoException, Exception{
+    public void excluiritemCarrinho(int codigocarrinho, int codigoproduto) throws CarrinhoException, DataSourceException, ItemCarrinhoException, Exception{
 
         try {
-            itemCarrinhoDAO.deletarItemCarrinho(codigocarrinho, codigoitem);
+            itemCarrinhoDAO.deletarItemCarrinho(codigocarrinho, codigoproduto);
         } catch (Exception e) {
             e.printStackTrace();
             throw new DataSourceException("Erro na fonte de dados", e);

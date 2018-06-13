@@ -128,11 +128,15 @@ public class InserirCarrinhoServlet extends HttpServlet {
                             
                             if(codiproduto == Integer.parseInt(codigoproduto)){
                                soma += p.getPrecovenda() * quantiproduto;
+                            }else{
+                                p = sp.encontrarProdutoPorCodigo(listaitenscadastrado.get(i).getProduto());
+                                soma += p.getPrecovenda() * listaitenscadastrado.get(i).getQuantidade();
                             }
                             
                         }
-
+                        
                         sc.alteraValorCarrinho(soma, carrinho.getCodigo());
+                        carrinho = sc.retornaCarrinho(carrinho.getCodigo());
                     } catch (Exception e) {
                     }
             }else{
@@ -183,7 +187,7 @@ public class InserirCarrinhoServlet extends HttpServlet {
                        
             }
         
-            sessao.setAttribute("cabecalhocarrinho", carrinho);
+            sessao.setAttribute("carrinhocadastrado", carrinho);
             sessao.setAttribute("listacarrinhocadastrado", listaitenscadastrado);
             sessao.setAttribute("itenscarrinho", listaitens);
             sessao.setAttribute("listaprodutos", listaprodutos);

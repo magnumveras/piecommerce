@@ -84,7 +84,9 @@
                                             </td>
                                             <td>
                                                 <form action="${pageContext.request.contextPath}/removeritemcarrinho" method="post" >
-                                                    <button type="submit" name="produtoitem" value="${carrinhocadastrado.getCodigo()}" 
+                                                    <input type="hidden" name="codigoproduto" value="${item.getProduto()}" />
+                                                    <input type="hidden" name="quantidade" value="${item.getQuantidade()}" />
+                                                    <button type="submit" name="codigocarrinho" value="${carrinhocadastrado.getCodigo()}" 
                                                             class="btn btn-danger center-block">X</button> 
                                                 </form>
                                             </td>
@@ -139,7 +141,8 @@
                                     </td>
                                     <td>
                                         <form action="${pageContext.request.contextPath}/removeritemcarrinho" method="post" >
-                                            <button type="submit" name="produtoitem" value="${item.getProduto()}" 
+                                            <input type="hidden" name="quantidade" value="${item.quantidade}"/>
+                                            <button type="submit" name="codigoproduto" value="${item.getProduto()}" 
                                                     class="btn btn-danger center-block">X</button> 
                                         </form>
                                     </td>
