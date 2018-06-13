@@ -79,14 +79,60 @@ public class InserirCarrinhoServlet extends HttpServlet {
             sessao.setAttribute("semestoque", "Quantidade indisponível!");
             response.sendRedirect(request.getContextPath() + "/index.jsp");
         }else{
-            carrinho = (Carrinho) sessao.getAttribute("carrinhocliente");
+            carrinho = (Carrinho) sessao.getAttribute("carrinhocadastrado");
             
             //Verifica se existe login de algum cliente no carrinho, senão inicia carrinho sem cadastro de itemcarrinho e cliente.
             if(carrinho != null){
                     try {
-                        sic.cadastraritemCarrinho(carrinho.getCodigo(), produto.getCodigo(), quantidade);
+                        listaitenscadastrado = sic.listarItensCarrinho(carrinho.getCodigo());
+                        boolean verifica = false;
+                        
+                        //Verifica se produto já existe no carrinho
+                        for(int i = 0; i < listaitenscadastrado.size(); i++){
+                            int cdproduto = listaitenscadastrado.get(i).getProduto();
+                            
+                            if(cdproduto == Integer.parseInt(codigoproduto)){
+                                verifica = true;
+                            }
+                        }
+                        
+                        if(verifica == false){
+                           sic.cadastraritemCarrinho(carrinho.getCodigo(), Integer.parseInt(codigoproduto), quantidade);
+                        }else{
+                            int alteraqtd = 0;
+                            for(int i = 0; i < listaitenscadastrado.size(); i++){
+                                int cdproduto = listaitenscadastrado.get(i).getProduto();
+                            
+                                if(cdproduto == Integer.parseInt(codigoproduto)){
+                                   alteraqtd = listaitenscadastrado.get(i).getQuantidade();
+                                }
+                            }
+                            
+                            sic.alteraQuantidadeItemCarrinho(carrinho.getCodigo(), Integer.parseInt(codigoproduto) , alteraqtd + quantidade);
+                        }
+                        
                         listaitenscadastrado = sic.listarItensCarrinho(carrinho.getCodigo());
                         listaprodutos = sp.listarProdutostotais();
+                        
+                        //Calcular Valor Total do Carrinho e se coloca no carrinho
+                        double soma = 0;
+                        for(int i = 0; i < listaitenscadastrado.size(); i++){
+                            Produto p = new Produto();
+                            int codiproduto = listaitenscadastrado.get(i).getProduto();
+                            int quantiproduto = listaitenscadastrado.get(i).getQuantidade();
+                        
+                            try {
+                                p = sp.encontrarProdutoPorCodigo(Integer.parseInt(codigoproduto));
+                            } catch (Exception e) {
+                            }
+                            
+                            if(codiproduto == Integer.parseInt(codigoproduto)){
+                               soma += p.getPrecovenda() * quantiproduto;
+                            }
+                            
+                        }
+
+                        sc.alteraValorCarrinho(soma, carrinho.getCodigo());
                     } catch (Exception e) {
                     }
             }else{
@@ -138,7 +184,7 @@ public class InserirCarrinhoServlet extends HttpServlet {
             }
         
             sessao.setAttribute("cabecalhocarrinho", carrinho);
-            sessao.setAttribute("itenscarrinhocadastrado", listaitenscadastrado);
+            sessao.setAttribute("listacarrinhocadastrado", listaitenscadastrado);
             sessao.setAttribute("itenscarrinho", listaitens);
             sessao.setAttribute("listaprodutos", listaprodutos);
             sessao.setAttribute("carrinhoiniciado", "ok");

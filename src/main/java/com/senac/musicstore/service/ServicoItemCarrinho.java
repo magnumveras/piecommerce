@@ -63,4 +63,16 @@ public class ServicoItemCarrinho {
             
         }
     }
+    
+       //Altera quantidade item carrinho
+    public void alteraQuantidadeItemCarrinho(int codigocarrinho, int codigoproduto, int quantidade) throws CarrinhoException, DataSourceException, ItemCarrinhoException, Exception{
+
+
+        try {
+            itemCarrinhoDAO.alteraQuantidadeItemCarrinho(codigocarrinho, codigoproduto, quantidade);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DataSourceException("Erro na fonte de dados", e);
+        }
+    }
 }

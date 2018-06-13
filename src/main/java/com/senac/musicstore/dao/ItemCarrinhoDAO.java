@@ -137,6 +137,23 @@ public class ItemCarrinhoDAO {
 
         return ItemCarrinho;
     }
+
+    public void alteraQuantidadeItemCarrinho(int codigocarrinho, int codigoproduto, int quantidade) throws Exception {
+        String query = "UPDATE itemcarrinho SET quantidade= ? where codigocarrinho= ? and codigoproduto = ?";
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query);
+            preparedStatement.setInt(1, quantidade);
+            preparedStatement.setInt(2, codigocarrinho);
+            preparedStatement.setInt(3, codigoproduto);
+             
+            preparedStatement.execute();
+            System.out.println("Valor Alterado");
+        } catch (SQLException ex) {
+            throw new Exception("Erro ao deletar o carrinho", ex);
+        
+        }
+    }
     
     
 }
