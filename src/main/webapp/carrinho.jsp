@@ -95,6 +95,15 @@
                                 </table>
                             </div>
                         </div>
+                        <div class="row">
+                            <div class="col-12" align="right">
+                            <form action="${pageContext.request.contextPath}/finalizarcarrinho" method="post">
+                                <input type="hidden" name="codigoproduto" value="${item.getProduto()}" />
+                                <button type="submit" name="codigocarrinho" value="${carrinhocadastrado.getCodigo()}" 
+                                    class="btn btn-success center-block">Finalizar Pedido</button> 
+                            </form>
+                            </div>
+                        </div>
                     </div>
             </c:when>
             <c:otherwise>
@@ -151,6 +160,9 @@
                                 </tbody>
                             </table>
                         </div>
+                    <div class="row">
+                        <h6>Cliente, faça login para finalizar pedido!</h6>
+                    </div>
                 </div>
             </c:otherwise>
         </c:choose> 

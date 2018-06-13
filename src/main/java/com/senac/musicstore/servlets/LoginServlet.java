@@ -90,100 +90,97 @@ public class LoginServlet extends HttpServlet {
                     sessao.setAttribute("loginoperacao", "loginoperacao");
                 }else{
                     sessao.setAttribute("logincliente", "logincliente");
+                    
+                    Carrinho carrinho = new Carrinho();
+                    Cliente cliente = new Cliente();
+                
+                    try {
+                        cliente = sc.obterClientePorCodigoUsuario(usuarioperil.getCodigo());
+                    }    catch (Exception e) {
+                    }
+                
+                    Timestamp dataDeHoje = new Timestamp(System.currentTimeMillis());
+                
+                    Timestamp datah = new Timestamp(System.currentTimeMillis());
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");  
+                    String data = format.format(datah.getTime()); 
+
+                    try {
+                        carrinho = scar.consultaCarrinhoPorClienteData(cliente.getId(), data);
+                    } catch (Exception e) {
+                    }
+                
+                    //////////////////////////////*********************////////////////////////////////////////////////////////
+                    //Verifica se já não existe carrinho cadastrado para cliente em questão
+                    if(carrinho.getCodigo() != null){
+                        try {
+                            listaitens = sic.listarItensCarrinho(carrinho.getCodigo());
+                     
+                        } catch (Exception e) {
+                        }
+                    
+                    }else{
+                        carrinho.setCliente(cliente.getId());
+                        carrinho.setData(dataDeHoje);
+                        Double valor = 0.0;
+                    
+                        carrinho.setValorTotal(valor);
+                
+                        try {
+                            codigocarrinho = scar.cadastrarCarrinho(carrinho);
+                        } catch (Exception e) {
+                        }
+                
+                        //Verifica se carrinho já foi iniciado sem cliente
+                        if(sessao.getAttribute("carrinhoiniciado") != null){
+                            listaitens = (List<ItemCarrinho>) sessao.getAttribute("itenscarrinho");
+                            for(int i = 0; i < listaitens.size(); i++){
+                                try {
+                                    sic.cadastraritemCarrinho(codigocarrinho, listaitens.get(i).getProduto(), listaitens.get(i).getQuantidade());
+                                } catch (Exception e) {
+                                }
+                            }
+                        }
+                    
+                        //Recebe itens cadastrados no carrinho
+                        try {
+                            itenscadastrados = sic.listarItensCarrinho(codigocarrinho);
+                        } catch (Exception e) {
+                        }
+                    
+                        //Calcular Valor Total do Carrinho e se coloca no carrinho
+                        double soma = 0;
+                        for(int i = 0; i < itenscadastrados.size(); i++){
+                            Produto p = new Produto();
+                            int codigoproduto = itenscadastrados.get(i).getProduto();
+                            int quantidade = itenscadastrados.get(i).getQuantidade();
+                        
+                            try {
+                                p = sp.encontrarProdutoPorCodigo(codigoproduto);
+                            } catch (Exception e) {
+                            }
+                        
+                            soma += p.getPrecovenda() * quantidade;
+                        }
+                    
+                        try {
+                            scar.alteraValorCarrinho(soma, codigocarrinho);
+                            carrinho = scar.retornaCarrinho(codigocarrinho);
+                        } catch (Exception e) {
+                        }
+                    sessao.removeAttribute("itenscarrinho");
+                    sessao.removeAttribute("carrinhoiniciado");
+                    sessao.setAttribute("carrinhocadastrado", carrinho);
+                    sessao.setAttribute("codigocarrinho", codigocarrinho);
+                    sessao.setAttribute("clientecarrinho", cliente);
+                    sessao.setAttribute("listacarrinhocadastrado", itenscadastrados);
+                    sessao.setAttribute("listaprodutos", listaprodutos);
                 }
+            }
                 
                 //Envia perfil de usuário para as páginas
                 sessao.setAttribute("perfilusuario", usuarioperil);
-                
-                Carrinho carrinho = new Carrinho();
-                Cliente cliente = new Cliente();
-                
-                try {
-                    cliente = sc.obterClientePorCodigoUsuario(usuarioperil.getCodigo());
-                } catch (Exception e) {
-                }
-                
-                Timestamp dataDeHoje = new Timestamp(System.currentTimeMillis());
-                
-                Timestamp datah = new Timestamp(System.currentTimeMillis());
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");  
-                String data = format.format(datah.getTime()); 
 
-                try {
-                    carrinho = scar.consultaCarrinhoPorClienteData(cliente.getId(), data);
-                } catch (Exception e) {
-                }
-                
-                //////////////////////////////*********************////////////////////////////////////////////////////////
-                //Verifica se já não existe carrinho cadastrado para cliente em questão
-                if(carrinho.getCodigo() != null){
-                    try {
-                       listaitens = sic.listarItensCarrinho(carrinho.getCodigo());
-                     
-                    } catch (Exception e) {
-                    }
-                    
-                }else{
-                    carrinho.setCliente(cliente.getId());
-                    carrinho.setData(dataDeHoje);
-                    Double valor = 0.0;
-                    
-                    carrinho.setValorTotal(valor);
-                
-                    try {
-                        codigocarrinho = scar.cadastrarCarrinho(carrinho);
-                    } catch (Exception e) {
-                    }
-                
-                    //Verifica se carrinho já foi iniciado sem cliente
-                    if(sessao.getAttribute("carrinhoiniciado") != null){
-                        listaitens = (List<ItemCarrinho>) sessao.getAttribute("itenscarrinho");
-                        for(int i = 0; i < listaitens.size(); i++){
-                            try {
-                                sic.cadastraritemCarrinho(codigocarrinho, listaitens.get(i).getProduto(), listaitens.get(i).getQuantidade());
-                            } catch (Exception e) {
-                            }
-                        }
-                    }
-                    
-                    //Recebe itens cadastrados no carrinho
-                    try {
-                        itenscadastrados = sic.listarItensCarrinho(codigocarrinho);
-                    } catch (Exception e) {
-                    }
-                    
-                    //Calcular Valor Total do Carrinho e se coloca no carrinho
-                    double soma = 0;
-                    for(int i = 0; i < itenscadastrados.size(); i++){
-                        Produto p = new Produto();
-                        int codigoproduto = itenscadastrados.get(i).getProduto();
-                        int quantidade = itenscadastrados.get(i).getQuantidade();
-                        
-                        try {
-                            p = sp.encontrarProdutoPorCodigo(codigoproduto);
-                        } catch (Exception e) {
-                        }
-                        
-                        soma += p.getPrecovenda() * quantidade;
-                    }
-                    
-                    try {
-                        scar.alteraValorCarrinho(soma, codigocarrinho);
-                        carrinho = scar.retornaCarrinho(codigocarrinho);
-                    } catch (Exception e) {
-                    }
-                    
-                }
-                
-                
-                sessao.removeAttribute("itenscarrinho");
-                sessao.removeAttribute("carrinhoiniciado");
-                sessao.setAttribute("carrinhocadastrado", carrinho);
-                sessao.setAttribute("codigocarrinho", codigocarrinho);
-                sessao.setAttribute("clientecarrinho", cliente);
-                sessao.setAttribute("listacarrinhocadastrado", itenscadastrados);
-                sessao.setAttribute("listaprodutos", listaprodutos);
-                
                 response.sendRedirect(request.getContextPath() + "/index.jsp");
                 sessao.removeAttribute("erro");
             }else{

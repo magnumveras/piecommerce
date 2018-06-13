@@ -269,7 +269,7 @@
                         <div class="form-group col-12 col-sm-3">
                             <label for="bairro">Bairro*</label>
                             <input name="bairro" type="text" class="form-control" style="width: 100%;" id="bairro"
-                                   required oninvalid="this.setCustomValidity('Preencha o bairro')" oninput="setCustomValidity('')" maxlength="15" placeholder="Bairro" size="15">
+                                   required oninvalid="this.setCustomValidity('Preencha o bairro')" oninput="setCustomValidity('')" maxlength="10" placeholder="Bairro" size="10">
                         </div>
                         <div class="form-group col-12 col-sm-3">
                             <label for="cidade">Cidade*</label>
@@ -320,10 +320,10 @@
                             <input name="ofertas" type="checkbox" value="True" >Desejo receber ofertas por e-mail
                         </div>
                         <div class="col-12 col-sm-2">
-                            <button type="reset" class="btn" onclick="voltar()">Cancelar</button>
+                            <button type="reset" class="btn btn-outline-primary" onclick="voltar()">Cancelar</button>
                         </div>
                         <div class="col-12 col-sm-3" >
-                            <button type="submit" class="btn">Salvar</button>
+                            <button type="submit" class="btn btn-outline-primary">Salvar</button>
                         </div>
                     </div>
                     </form>
@@ -484,10 +484,10 @@
                             </c:if>
                         </div>
                         <div class="col-12 col-sm-2">
-                            <button type="reset" class="btn" onclick="voltar()">Cancelar</button>
+                            <button type="reset" class="btn btn-outline-primary" onclick="window.location.href='index.jsp'">Cancelar</button>
                         </div>
                         <div class="col-12 col-sm-3" >
-                            <button type="submit" class="btn">Salvar</button>
+                            <button type="submit" class="btn btn-outline-primary">Salvar</button>
                         </div>
                     </div>
                     </form>
