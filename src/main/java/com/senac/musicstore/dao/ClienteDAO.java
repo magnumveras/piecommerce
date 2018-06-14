@@ -391,4 +391,47 @@ public class ClienteDAO {
         
     }
     }
+
+    public Cliente encontrarClientePorCodigo(int codigo) throws Exception {
+        System.out.println("Iniciando listagem de cliente...");
+        
+        Cliente cliente = new Cliente();
+        String query = "SELECT * FROM cliente WHERE id=?";
+
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1,codigo);
+            
+            ResultSet rs = preparedStatement.executeQuery();
+            
+            System.out.println("Busca efetuada com sucesso");
+            
+            while (rs.next()){
+                cliente.setId(rs.getInt("id"));
+                cliente.setNome(rs.getString("nome"));
+                cliente.setSobrenome(rs.getString("sobrenome"));
+                cliente.setSexo(rs.getString("sexo"));
+                cliente.setCpf(rs.getString("cpf"));
+                cliente.setRg(rs.getString("rg"));            
+                cliente.setIdade(rs.getString("datanasc"));                
+                cliente.setTelefone(rs.getString("telefone"));
+                cliente.setEmail(rs.getString("email"));
+                cliente.setEndereco(rs.getString("endereco"));
+                cliente.setNumero(rs.getString("numero"));
+                cliente.setBairro(rs.getString("bairro"));
+                cliente.setComplemento(rs.getString("complemento"));
+                cliente.setCidade(rs.getString("cidade"));
+                cliente.setEstado(rs.getString("estado"));
+                cliente.setCep(rs.getString("cep"));
+                cliente.setCodigousuario(rs.getInt("codigousuario"));
+                cliente.setOfertas(rs.getBoolean("ofertas"));
+            }
+            
+        } catch (SQLException ex) {
+            throw new Exception("Erro ao listar cliente", ex);
+        }
+
+        
+        return cliente;
+    }
 }

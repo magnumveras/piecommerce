@@ -184,14 +184,13 @@ public class InserirCarrinhoServlet extends HttpServlet {
                 }else{
                     listaitens.add(itemcarrinho); 
                 }
-                       
+                  sessao.setAttribute("itenscarrinho", listaitens);
+                  sessao.setAttribute("carrinhoiniciado", "ok");
             }
         
             sessao.setAttribute("carrinhocadastrado", carrinho);
             sessao.setAttribute("listacarrinhocadastrado", listaitenscadastrado);
-            sessao.setAttribute("itenscarrinho", listaitens);
             sessao.setAttribute("listaprodutos", listaprodutos);
-            sessao.setAttribute("carrinhoiniciado", "ok");
 
             response.sendRedirect(request.getContextPath() + "/carrinho.jsp");    
         }

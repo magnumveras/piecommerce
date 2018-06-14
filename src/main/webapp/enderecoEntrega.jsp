@@ -53,7 +53,7 @@
                     <div class="col-12 col-sm-3">
                         <label class="hEnd">Estado*</label>
                             <select class="form-control" name="estado" id="estado">
-                                <option value="${ClienteEndereco.getEstado()}"></option>
+                                <option value="SP">${ClienteEndereco.getEstado()}</option>
                                 <option value="AC">Acre</option>
                                 <option value="AL">Alagoas</option>
                                 <option value="AP">Amapá</option>
