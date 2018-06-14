@@ -34,7 +34,7 @@ CREATE TABLE Cliente (
     estado VARCHAR(2) NOT NULL,
     cep VARCHAR(9) NOT NULL,
     codigousuario INTEGER NOT NULL,
-    ofertas boolean NOT NULL,
+    ofertas boolean,
     CONSTRAINT primary_keycli PRIMARY KEY (id),
     CONSTRAINT foreign_keycli FOREIGN KEY (codigousuario) REFERENCES Usuario(codigo)
 );
@@ -75,8 +75,8 @@ CREATE TABLE Imagem(
 
 CREATE TABLE Produto (
     codigo INTEGER NOT NULL AUTO_INCREMENT,
-    nome VARCHAR(500) NOT NULL,
-    descricao VARCHAR(2000) NOT NULL,
+    nome VARCHAR(70) NOT NULL,
+    descricao VARCHAR(200) NOT NULL,
     codigofornecedor INTEGER NOT NULL,
     codigocategoria INTEGER NOT NULL,
     precocompra DECIMAL(8,2) NOT NULL,
@@ -92,22 +92,25 @@ CREATE TABLE Produto (
 
 CREATE TABLE Endereco_Entrega(
 	codigo INTEGER NOT NULL AUTO_INCREMENT,
-    endereco VARCHAR(50),
+    endereco VARCHAR(70),
     complemento VARCHAR(50),
     numero varchar(10),
     bairro varchar(10),
+    cidade VARCHAR(30) NOT NULL,
+    estado VARCHAR(2) NOT NULL,
+    cep VARCHAR(9) NOT NULL,
     CONSTRAINT primary_keyven PRIMARY KEY (codigo)
 );
 
 CREATE TABLE Forma_Pagamento(
 	codigo INTEGER NOT NULL AUTO_INCREMENT,
-    cartaocredito BOOLEAN,
-    paypal BOOLEAN,
+    cartaocredito VARCHAR(1),
+    cartaodebito VARCHAR(1),
     numerocartao VARCHAR(30),
     nomecartao VARCHAR(20),
-    codigoseguranca VARCHAR(3),
-    usuariopay VARCHAR(30),
-    senhapay VARCHAR(30),
+    vencimento VARCHAR(10),
+    codigoseguranca VARCHAR(10),
+    parcelas VARCHAR(10),
     CONSTRAINT primary_keyforma PRIMARY KEY (codigo)
 );
 
@@ -273,7 +276,12 @@ INSERT INTO PRODUTO (nome, descricao, precocompra, precovenda, estoque, codigoca
                       Tudo começou em 1887, quando ele criou o primeiro órgão de bambu do Japão. O desenvolvimento da arte de criar
                       instrumentos musicais veio como uma consequência natural.', 200.00, 474.00, 20, 5, 2, '2008-01-01 00:00:01');
 
-
+INSERT INTO PRODUTO (nome, descricao, precocompra, precovenda, estoque, codigocategoria, codigofornecedor, datacadastro)
+            VALUES   ('Flauta)', 
+				      'Yamaha: As mãos habilidosas de  Yamaha deram início à maior fábrica de instrumentos musicais do mundo.
+                      Tudo começou em 1887, quando ele criou o primeiro órgão de bambu do Japão. O desenvolvimento da arte de criar
+                      instrumentos musicais veio como uma consequência natural.', 200.00, 474.00, 0, 5, 2, '2008-01-01 00:00:01');
+                      
 INSERT INTO PERFIL (perfil) 
 			VALUES ('Gerente');
             
@@ -282,7 +290,8 @@ INSERT INTO PERFIL (perfil)
 
 INSERT INTO PERFIL (perfil) 
 			VALUES ('Cliente');
-
+            
+            
 INSERT INTO USUARIO (nome, login, senha, codigoperfil)
 			VALUES ('Administrador', 'admin', 'admin', 2);
             
