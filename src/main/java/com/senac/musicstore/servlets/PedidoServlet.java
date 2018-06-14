@@ -73,7 +73,7 @@ public class PedidoServlet extends HttpServlet {
         
         Carrinho carrinho = new Carrinho();
         ItemCarrinho itemcarrinho = new ItemCarrinho();
-        ItemPedido itemvenda = new ItemPedido();
+        ItemPedido itempedido = new ItemPedido();
         Pedido pedido = new Pedido();
         Cliente cliente = new Cliente();
         
@@ -170,11 +170,17 @@ public class PedidoServlet extends HttpServlet {
                         listaprodutos = sp.listarProdutostotais();
                 
                         Timestamp data = new Timestamp(System.currentTimeMillis());
+                        
+                        
+                        String endereco = request.getParameter("endereco");
+                       
        
                         //Atribuindo valores do carrinho para a venda
                         pedido.setCodigoCliente(carrinho.getCodigoCliente());
                         pedido.setData(data);
                         pedido.setValorTotal(carrinho.getValorTotal());
+                        pedido.setCodigoendereco(Integer.parseInt(endereco));
+                        pedido.setCodigopagamento(codigoformapagamento);
                         
                         //Cadastro de Cabeçario de Venda
                         int codigopedido = sped.cadastrarPedido(pedido);
@@ -182,21 +188,40 @@ public class PedidoServlet extends HttpServlet {
                 
                         //Cadastra Itens na Venda
                         for(int i = 0; i < listaitens.size(); i++){
-                            itemvenda.setCodigoVenda(codigopedido);
-                            itemvenda.setCodigoProduto(listaitens.get(i).getProduto());
-                            itemvenda.setQuantidade(listaitens.get(i).getQuantidade());
+                            itempedido.setCodigopedido(codigopedido);
+                            itempedido.setCodigoProduto(listaitens.get(i).getProduto());
+                            itempedido.setQuantidade(listaitens.get(i).getQuantidade());
                 
-                        sip.cadastraritemVenda(itemvenda.getCodigoVenda(), itemvenda.getCodigoProduto(), itemvenda.getQuantidade());
+                        sip.cadastraritemPedido(itempedido.getCodigopedido(), itempedido.getCodigoProduto(), itempedido.getQuantidade());
                         }
                 
                         //Esvazia ItemCarrinho
-                        sic.excluirCarrinho(Integer.parseInt(codigocarrinho));
+                        sic.excluirItensCarrinho(Integer.parseInt(codigocarrinho));
             
                         //Esvazia Carrinho
                         sc.excluirCarrinho(Integer.parseInt(codigocarrinho));
                         
-                        sessao.setAttribute("pedidocliente", codigopedido);
-                        response.sendRedirect(request.getContextPath() + "/dadosPagamento.jsp");
+                        Pedido ped = new Pedido();
+                        Cliente cli = new Cliente();
+                        
+                        ped = sped.ConsultarPedido(codigopedido);
+                        cli = scli.obterClientePorCodigo(ped.getCodigoCliente());
+                        
+                        
+                        //Retorna pedido para tela de cliente
+                        sessao.setAttribute("pedidocliente", ped);
+                        sessao.setAttribute("clientepedido", cli);
+                        
+                        //Remove sessões utilizadas
+                        sessao.removeAttribute("dadosPagamento");
+                        sessao.removeAttribute("CodigoEndereco");
+                        sessao.removeAttribute("ClienteEndereco");
+                        sessao.removeAttribute("EnderecoEntrega");
+                        sessao.removeAttribute("codcarrinho");
+                        sessao.removeAttribute("carrinhocadastrado");
+                        sessao.removeAttribute("listacarrinhocadastrado");
+              
+                        response.sendRedirect(request.getContextPath() + "/dadosPedido.jsp");
                     }
                     
                     

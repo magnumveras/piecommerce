@@ -72,6 +72,7 @@
                 <div class="col-12" align="right">
                     <br>
                     <input type="hidden" name="pagamentos" value="pagamentos" />
+                    <input type="hidden" name="endereco" value="${CodigoEndereco}" >
                     <button class="btn btn-outline-primary bInfo bVoltar" type="button" onclick="window.location.href='enderecoEntrega.jsp'">Voltar</button>
                     <button class="btn btn-outline-primary bInfo" type="submit">Confirmar</button> 
                 </div>

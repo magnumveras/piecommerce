@@ -45,7 +45,7 @@
                         <br>
                         <div class="card-text">
                             <c:if test="${produto.estoque > 0}">
-                                <a href="inserircarrinho?&produto=<c:out value='${produto.codigo}'/>" class="btn btn-primary d-flex justify-content-center">&ensp;Add ao Carrinho</a>
+                                <a href="inserircarrinho?&produto=<c:out value='${produto.codigo}'/>" onclick="<%sessao.setAttribute("escondecarr", "ok");%>" class="btn btn-primary d-flex justify-content-center">&ensp;Add ao Carrinho</a>
                             </c:if>
                             <c:if test="${produto.estoque == 0}">
                                 <h6 align="center">Produto Indisponível</h6>

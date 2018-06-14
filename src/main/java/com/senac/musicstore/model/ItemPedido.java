@@ -5,14 +5,18 @@ package com.senac.musicstore.model;
  * @author geoinformacao
  */
 public class ItemPedido {
-    private int iditemvenda;
-    private int codigovenda;
+    private int iditempedido;
+    private int codigopedido;
     private int codigoproduto; 
     private int quantidade;
     private String nomecategoria;
     private String nomeproduto;
     private String descricaoproduto;
     private Double prevovenda;
+
+    public ItemPedido() {
+        super();
+    }
 
     public String getDescricaoproduto() {
         return descricaoproduto;
@@ -21,16 +25,6 @@ public class ItemPedido {
     public void setDescricaoproduto(String descricaoproduto) {
         this.descricaoproduto = descricaoproduto;
     }
-    
-    
-    public int getCodigovenda() {
-        return codigovenda;
-    }
-
-    public void setCodigovenda(int codigovenda) {
-        this.codigovenda = codigovenda;
-    }
-    
     
     
     public String getNomecategoria() {
@@ -57,23 +51,6 @@ public class ItemPedido {
         this.prevovenda = prevovenda;
     }
     
-    
-    public int getIditemvenda() {
-        return iditemvenda;
-    }
-
-    public void setIditemvenda(int iditemvenda) {
-        this.iditemvenda = iditemvenda;
-    }
-
-    public int getCodigoVenda() {
-        return codigovenda;
-    }
-
-    public void setCodigoVenda(int codigovenda) {
-        this.codigovenda = codigovenda;
-    }
-
     public int getCodigoProduto() {
         return codigoproduto;
     }
@@ -88,6 +65,30 @@ public class ItemPedido {
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
+    }
+
+    public int getIditempedido() {
+        return iditempedido;
+    }
+
+    public void setIditempedido(int iditempedido) {
+        this.iditempedido = iditempedido;
+    }
+
+    public int getCodigopedido() {
+        return codigopedido;
+    }
+
+    public void setCodigopedido(int codigopedido) {
+        this.codigopedido = codigopedido;
+    }
+
+    public int getCodigoproduto() {
+        return codigoproduto;
+    }
+
+    public void setCodigoproduto(int codigoproduto) {
+        this.codigoproduto = codigoproduto;
     }
     
     

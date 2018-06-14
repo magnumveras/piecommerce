@@ -47,7 +47,7 @@
             <div class="row">
                 <div class="col-12" id="logotopo">
                     <!-- Logo -->
-                    <a href="index.jsp"><img src="imagens/logomarca.png"  alt="Logotipo" class="logotipo"
+                    <a href="index.jsp" onclick="<%sessao.removeAttribute("escondecarr");%>"><img src="imagens/logomarca.png"  alt="Logotipo" class="logotipo"
                                              title="Voltar ao Home"></a>
 
                     <!--Botões superiores -->
@@ -66,7 +66,7 @@
                             <button class="btn btn-outline-secondary" id="btnLogin" type="button" data-toggle="modal" data-target="#exampleModalCenter"> Login </button>
                         </c:if>
                         <c:if test="${(empty loginoperacao)}">    
-                            <a class="btn btn-outline-secondary" id="btnCarrinho" href="carrinho.jsp">Carrinho</a>
+                            <a class="btn btn-outline-secondary" id="btnCarrinho" href="carrinho.jsp" onclick="<%sessao.setAttribute("escondecarr", "ok");%>">Carrinho</a>
                         </c:if>
                         &nbsp
                         <c:if test="${(not empty loginoperacao) || (not empty logincliente)}">
@@ -107,7 +107,7 @@
                                     </div>
 
                                     <div class="novoUsu">
-                                        <label>Novo usuário? <a href="cadastroCliente.jsp">Criar cadastro</a></label>
+                                        <label>Novo usuário? <a href="cadastroCliente.jsp" onclick="<%sessao.setAttribute("escondecarr", "ok");%>">Criar cadastro</a></label>
                                     </div>
 
                                     <div class="modal-footer">
@@ -259,7 +259,7 @@
             </nav>
         </div>
     </c:if>
-    <c:if test="${empty loginoperacao}">
+    <c:if test="${(empty loginoperacao ) || (empty esconde)}">
         <div class="row">
             <div id="carouselExampleIndicators" class="carousel slide col-12" data-ride="carousel">
                 <h2 style="display: none">Validação w3</h2>

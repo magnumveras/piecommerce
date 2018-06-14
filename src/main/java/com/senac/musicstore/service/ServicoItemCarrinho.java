@@ -30,7 +30,7 @@ public class ServicoItemCarrinho {
     }
     
       //Exclui carrinho e dados do topo do carrinho
-    public void excluirCarrinho(int codigocarrinho) throws CarrinhoException, DataSourceException, ItemCarrinhoException, Exception{
+    public void excluirItensCarrinho(int codigocarrinho) throws CarrinhoException, DataSourceException, ItemCarrinhoException, Exception{
 
 
         try {

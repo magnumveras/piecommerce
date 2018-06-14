@@ -18,21 +18,23 @@ import java.util.List;
  
 
 /**
- * @author Uriel
+ * @author Magno
  */
 public class PedidoDAO {
         ConexaoBanco conexaoBanco = new ConexaoBanco();    
         Connection conn = conexaoBanco.createConnection();
         
     public Integer cadastrarPedido(Pedido pedido){
-                 String query = " insert into venda (codigocliente, datavenda, valortotal)"
-        + " values (?, ?, ?)";
+                 String query = " insert into pedido (codigocliente, datavenda, valortotal, codigopagamento, codigoendereco)"
+        + " values (?, ?, ?, ?, ?)";
         
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setInt(1, pedido.getCodigoCliente());
             preparedStatement.setTimestamp(2, pedido.getData());
             preparedStatement.setDouble(3,pedido.getValorTotal());
+            preparedStatement.setInt(4,pedido.getCodigopagamento());
+            preparedStatement.setInt(5,pedido.getCodigoendereco());
             
             preparedStatement.executeUpdate();            
             ResultSet  rs = preparedStatement.getGeneratedKeys();
@@ -80,6 +82,38 @@ public class PedidoDAO {
         }
           
         return listadevendas;
+       
+    }
+     
+     //Consulta pedido por código
+     public Pedido consultarPedido(int codigo) throws Exception{
+         String query = "Select * from pedido where codigo=?";
+         
+         Pedido pedido = new Pedido();
+         
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+ 
+            preparedStatement.setInt(1, codigo);
+
+            
+            ResultSet rs = preparedStatement.executeQuery();
+            
+            while (rs.next()){        
+                pedido.setCodigo(rs.getInt(1));
+                pedido.setCodigoCliente(rs.getInt(2));
+                pedido.setData(rs.getTimestamp(3));
+                pedido.setValorTotal(rs.getDouble(4));
+                pedido.setCodigopagamento(rs.getInt(5));
+                pedido.setCodigoendereco(rs.getInt(6));
+                pedido.setCodigovenda(rs.getInt(7));
+            }
+            
+        } catch (SQLException ex) {
+            throw new Exception("Erro ao listar carrinho", ex);
+        }
+          
+        return pedido;
        
     }
 }

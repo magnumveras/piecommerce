@@ -21,6 +21,7 @@ public class Pedido {
     private Double valorTotal;
     private Integer codigopagamento; //crud >> insert getCodigo();
     private Integer codigoendereco;
+    private Integer codigovenda;
 
     public Pedido() {
         super();
@@ -34,6 +35,15 @@ public class Pedido {
         this.codigopagamento = codigopagamento;
     }
 
+    public Integer getCodigovenda() {
+        return codigovenda;
+    }
+
+    public void setCodigovenda(Integer codigovenda) {
+        this.codigovenda = codigovenda;
+    }
+
+    
     public Integer getCodigo() {
         return codigo;
     }

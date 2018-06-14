@@ -6,6 +6,7 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <% HttpSession sessao = request.getSession(); %>
 <!DOCTYPE html>
 <html>
@@ -24,7 +25,7 @@
             </div>
             <div class="col-12 col-sm-7" style="margin-top: 10%;">
                 <h5><c:out value="${produtodetalhes.nome}" /></h5>
-                <h4><c:out value="R$ ${produtodetalhes.precovenda}" /></h4>
+                <h4><fmt:setLocale value = "pt-BR"/> <fmt:formatNumber value="${produtodetalhes.precovenda}" type="currency"/></h4>
                 <label><c:out value="${produtodetalhes.descricao}" /></label>
                 
                 <div class="form-inline">

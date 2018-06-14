@@ -20,7 +20,7 @@ public class ServicoItemPedido {
         ItemPedidoDAO itemPedidoDAO = new ItemPedidoDAO();
     
     
-    public void cadastraritemVenda(int codigopedido, int codigoproduto, int quantidade) throws PedidoException, DataSourceException, ItemPedidoException, Exception{
+    public void cadastraritemPedido(int codigopedido, int codigoproduto, int quantidade) throws PedidoException, DataSourceException, ItemPedidoException, Exception{
 
         try {
             itemPedidoDAO.cadastrarItemPedido(codigopedido, codigoproduto, quantidade);

@@ -28,7 +28,7 @@ public class ItemPedidoDAO {
     
     //Cadastra um novo item na venda
     public void cadastrarItemPedido(int codigopedido, int codigoproduto, int quantidade){
-                 String query = " insert into itempedido (codigovenda, codigoproduto, quantidade )"
+                 String query = " insert into itempedido (codigopedido, codigoproduto, quantidade )"
         + " values (?, ?, ?)";
         
         
@@ -41,7 +41,7 @@ public class ItemPedidoDAO {
             preparedStatement.execute();
             preparedStatement.close();
         } catch (SQLException ex) {
-            System.out.println("Erro ao salvar venda");
+            System.out.println("Erro ao salvar item pedido");
         }
     }
     
@@ -65,7 +65,7 @@ public class ItemPedidoDAO {
             
                 while (rs.next()){
                     ItemPedido itemvenda = new ItemPedido();
-                    itemvenda.setCodigoVenda(rs.getInt(1));
+                    itemvenda.setCodigopedido(rs.getInt(1));
                     itemvenda.setCodigoProduto(rs.getInt(2));
                     itemvenda.setNomeproduto(rs.getString(3));
                     itemvenda.setDescricaoproduto(rs.getString(4));
