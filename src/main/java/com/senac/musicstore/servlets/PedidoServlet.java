@@ -62,7 +62,11 @@ public class PedidoServlet extends HttpServlet {
         ServicoEnderecoEntrega see = new ServicoEnderecoEntrega();
         
         String codigocarrinho = request.getParameter("codigocarrinho");
-       
+        
+        if(codigocarrinho != null){
+            sessao.setAttribute("codcarrinho", codigocarrinho);
+        }
+        
         
         Carrinho carrinho = new Carrinho();
         ItemCarrinho itemcarrinho = new ItemCarrinho();
@@ -76,14 +80,17 @@ public class PedidoServlet extends HttpServlet {
         
         try {
             //Retorna lista de itens do carrinh
-            if(codigocarrinho != null){
+            if((codigocarrinho != null)||(sessao.getAttribute("codcarrinho") != null)){
+                if(sessao.getAttribute("codcarrinho") != null){
+                    codigocarrinho = (String) sessao.getAttribute("codcarrinho");
+                }
                 
                 if(sessao.getAttribute("enderecoEntrega") == null){
                     Integer codigoendereco = 0;
                     
                     //Retorna carrinho para descobrir código do cliente
                     carrinho = sc.retornaCarrinho(Integer.parseInt(codigocarrinho));
-                    cliente = scli.obterClientePorCodigoUsuario(carrinho.getCodigoCliente());
+                    cliente = scli.obterClientePorCodigo(carrinho.getCodigoCliente());
                     
                     String verificaendereco = request.getParameter("endrecook");
                     
@@ -110,14 +117,13 @@ public class PedidoServlet extends HttpServlet {
                         enderecoentrega.setCidade(cidade);
                         
                         codigoendereco = see.cadastrarEnderecoEntrega(enderecoentrega);
+                        sessao.setAttribute("CodigoEndereco", codigoendereco);
                         response.sendRedirect(request.getContextPath() + "/dadosPagamento.jsp");
                     }else{
+                        sessao.setAttribute("ClienteEndereco", cliente);
                         response.sendRedirect(request.getContextPath() + "/enderecoEntrega.jsp");
                     }
-                    
-                    sessao.setAttribute("CodigoEndereco", codigoendereco);
-                    sessao.setAttribute("ClienteEndereco", cliente);
-                    
+             
                 }else if (sessao.getAttribute("dadosPagamento") == null){
                     
                     response.sendRedirect(request.getContextPath() + "/dadosPagamento.jsp");
