@@ -7,12 +7,16 @@ and open the template in the editor.
     Created on : 22/05/2018, 19:10:09
     Author     : magno
 */
+
+body {
+    background-color: #eceff1;
+}
 .blink { 
     text-decoration: blink; 
 }
 
 .fixedHeightImg > img {
-    max-height: 350px;
+    max-height: 550px;
     margin-left: auto;
     margin-right: auto;
     width: auto;
@@ -54,4 +58,18 @@ and open the template in the editor.
 #teste:hover{
     top:-2px;
     box-shadow:0 2px 2px #666
+}
+
+.logotipo{
+    margin-right: 650px;
+}
+
+#menuprincipal{
+    margin-bottom: 15px;
+    background-color:black;
+    border-radius: 5px;
+}
+
+#navbarSupportedContent {
+    margin-bottom: 30px;
 }

@@ -21,11 +21,10 @@
     <section class="container">
             <div class="row">
                 <hr class="hr col-12">
-                <div class="col-12 d-flex justify-content-center">
-                </div>
+                
                 <c:forEach items="${ListaProdutos}" var="produto">
-                    
-                <div class="col-12 col-sm-3 colcard-deck fixedHeightProd" id="produtobuscar">
+                      
+                <div class="col-12 col-sm-6 col-md-4  colcard-deck fixedHeightProd" id="produtobuscar">
                         <form class="form-group">
                         <figure id="teste">
                             <a href="consultadetalhes?&produto=<c:out value='${produto.codigo}'/>" class="d-flex justify-content-center">
