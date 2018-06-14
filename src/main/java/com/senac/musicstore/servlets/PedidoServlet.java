@@ -14,6 +14,7 @@ import com.senac.musicstore.model.ItemCarrinho;
 import com.senac.musicstore.model.ItemPedido;
 import com.senac.musicstore.model.Pedido;
 import com.senac.musicstore.model.Produto;
+import com.senac.musicstore.model.Usuario;
 import com.senac.musicstore.service.ServicoCarrinho;
 import com.senac.musicstore.service.ServicoCliente;
 import com.senac.musicstore.service.ServicoEnderecoEntrega;
@@ -220,6 +221,25 @@ public class PedidoServlet extends HttpServlet {
                         sessao.removeAttribute("codcarrinho");
                         sessao.removeAttribute("carrinhocadastrado");
                         sessao.removeAttribute("listacarrinhocadastrado");
+                        
+                       
+                        String codigousuario = request.getParameter("codigousuario");
+                        
+                        cliente = scli.obterClientePorCodigoUsuario(Integer.parseInt(codigousuario));
+                        
+                        Timestamp dataDeHoje = new Timestamp(System.currentTimeMillis());
+                        
+                        carrinho.setCliente(cliente.getId());
+                        carrinho.setData(dataDeHoje);
+                        Double valor = 0.0;
+                        carrinho.setValorTotal(valor);
+                        
+                        int codcarrinho = sc.cadastrarCarrinho(carrinho);
+                        carrinho = sc.retornaCarrinho(codcarrinho);
+                        
+                        sessao.setAttribute("carrinhocadastrado", carrinho);
+                        sessao.setAttribute("codigocarrinho", codcarrinho);
+                        
               
                         response.sendRedirect(request.getContextPath() + "/dadosPedido.jsp");
                     }

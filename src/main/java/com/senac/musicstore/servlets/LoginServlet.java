@@ -180,6 +180,7 @@ public class LoginServlet extends HttpServlet {
                 
                 //Envia perfil de usuário para as páginas
                 sessao.setAttribute("perfilusuario", usuarioperil);
+                sessao.setAttribute("codigousuario", usuarioperil.getCodigo());
 
                 response.sendRedirect(request.getContextPath() + "/index.jsp");
                 sessao.removeAttribute("erro");
