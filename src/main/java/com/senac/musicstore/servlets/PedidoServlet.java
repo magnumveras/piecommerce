@@ -17,6 +17,7 @@ import com.senac.musicstore.model.Produto;
 import com.senac.musicstore.service.ServicoCarrinho;
 import com.senac.musicstore.service.ServicoCliente;
 import com.senac.musicstore.service.ServicoEnderecoEntrega;
+import com.senac.musicstore.service.ServicoFormaPagamento;
 import com.senac.musicstore.service.ServicoItemCarrinho;
 import com.senac.musicstore.service.ServicoItemPedido;
 import com.senac.musicstore.service.ServicoPedido;
@@ -61,6 +62,7 @@ public class PedidoServlet extends HttpServlet {
         ServicoProduto sp = new ServicoProduto();
         ServicoCliente scli = new ServicoCliente();
         ServicoEnderecoEntrega see = new ServicoEnderecoEntrega();
+        ServicoFormaPagamento sfp = new ServicoFormaPagamento();
         
         String codigocarrinho = request.getParameter("codigocarrinho");
         
@@ -86,7 +88,7 @@ public class PedidoServlet extends HttpServlet {
                     codigocarrinho = (String) sessao.getAttribute("codcarrinho");
                 }
                 
-                if(sessao.getAttribute("enderecoEntrega") == null){
+                if(sessao.getAttribute("EnderecoEntrega") == null){
                     Integer codigoendereco = 0;
                     
                     //Retorna carrinho para descobrir código do cliente
@@ -94,6 +96,10 @@ public class PedidoServlet extends HttpServlet {
                     cliente = scli.obterClientePorCodigo(carrinho.getCodigoCliente());
                     
                     String verificaendereco = request.getParameter("endrecook");
+                            
+                    //Guarda valor total do carrinho para uso no método de pagamento
+                    Double valortotal = carrinho.getValorTotal();
+                    sessao.setAttribute("valortotal", valortotal);
                     
                     //Verifica se submit foi realizado na tela de endereço
                     if(verificaendereco != null){
@@ -136,6 +142,8 @@ public class PedidoServlet extends HttpServlet {
                         String numerocartao = request.getParameter("numerocartao");
                         String nomecartao = request.getParameter("nomecartao");
                         String codigoseguranca = request.getParameter("codigoseguranca");
+                        String vencimento = request.getParameter("vencimento");
+                        String parcelas = request.getParameter("parcelas");
                         
                         FormaPagamento forma = new FormaPagamento();
                         
@@ -148,47 +156,50 @@ public class PedidoServlet extends HttpServlet {
                         forma.setNumerocartao(numerocartao);
                         forma.setNomecartao(nomecartao);
                         forma.setCodigoseguranca(codigoseguranca);
-
-                    }
-                    
-                    response.sendRedirect(request.getContextPath() + "/dadosPagamento.jsp");
-                }else{
-                    listaitens = sic.listarItensCarrinho(Integer.parseInt(codigocarrinho));
+                        forma.setVencimento(vencimento);
+                        forma.setParcelas(parcelas);
+                        
+                        int codigoformapagamento = sfp.cadastrarFormaPagamento(forma);
+                        ////////////////////////////////////////////////////////////////////////////////////
+                        listaitens = sic.listarItensCarrinho(Integer.parseInt(codigocarrinho));
                
-                    //Retorna topo do carrinho (dados que não se alteram)
-                    carrinho = sc.retornaCarrinho(Integer.parseInt(codigocarrinho));
+                        //Retorna topo do carrinho (dados que não se alteram)
+                        carrinho = sc.retornaCarrinho(Integer.parseInt(codigocarrinho));
                 
-                    //Lista todos os produtos da empresa
-                    listaprodutos = sp.listarProdutostotais();
+                       //Lista todos os produtos da empresa
+                        listaprodutos = sp.listarProdutostotais();
                 
-                    Timestamp data = new Timestamp(System.currentTimeMillis());
-                    
-                    
+                        Timestamp data = new Timestamp(System.currentTimeMillis());
+       
+                        //Atribuindo valores do carrinho para a venda
+                        pedido.setCodigoCliente(carrinho.getCodigoCliente());
+                        pedido.setData(data);
+                        pedido.setValorTotal(carrinho.getValorTotal());
+                        
+                        //Cadastro de Cabeçario de Venda
+                        int codigopedido = sped.cadastrarPedido(pedido);
+                        pedido.setCodigo(codigopedido);
+                
+                        //Cadastra Itens na Venda
+                        for(int i = 0; i < listaitens.size(); i++){
+                            itemvenda.setCodigoVenda(codigopedido);
+                            itemvenda.setCodigoProduto(listaitens.get(i).getProduto());
+                            itemvenda.setQuantidade(listaitens.get(i).getQuantidade());
+                
+                        sip.cadastraritemVenda(itemvenda.getCodigoVenda(), itemvenda.getCodigoProduto(), itemvenda.getQuantidade());
+                        }
+                
+                        //Esvazia ItemCarrinho
+                        sic.excluirCarrinho(Integer.parseInt(codigocarrinho));
             
-                    //Atribuindo valores do carrinho para a venda
-                    pedido.setCodigoCliente(carrinho.getCodigoCliente());
-                    pedido.setData(data);
-                    pedido.setValorTotal(carrinho.getValorTotal());
-                
-                    //Cadastro de Cabeçario de Venda
-                    int codigopedido = sped.cadastrarPedido(pedido);
-                    pedido.setCodigo(codigopedido);
-                
-                    //Cadastra Itens na Venda
-                    for(int i = 0; i < listaitens.size(); i++){
-                        itemvenda.setCodigoVenda(codigopedido);
-                        itemvenda.setCodigoProduto(listaitens.get(i).getProduto());
-                        itemvenda.setQuantidade(listaitens.get(i).getQuantidade());
-                
-                    sip.cadastraritemVenda(itemvenda.getCodigoVenda(), itemvenda.getCodigoProduto(), itemvenda.getQuantidade());
+                        //Esvazia Carrinho
+                        sc.excluirCarrinho(Integer.parseInt(codigocarrinho));
+                        
+                        sessao.setAttribute("pedidocliente", codigopedido);
+                        response.sendRedirect(request.getContextPath() + "/dadosPagamento.jsp");
                     }
-                
-                    //Esvazia ItemCarrinho
-                    sic.excluirCarrinho(Integer.parseInt(codigocarrinho));
-            
-                    //Esvazia Carrinho
-                    sc.excluirCarrinho(Integer.parseInt(codigocarrinho));
-                    response.sendRedirect(request.getContextPath() + "/pedidofinalizado.jsp");
+                    
+                    
                 }
                
             }

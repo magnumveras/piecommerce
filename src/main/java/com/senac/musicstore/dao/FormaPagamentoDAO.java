@@ -24,8 +24,8 @@ public class FormaPagamentoDAO {
         
         public Integer inserirFormaPagamento(FormaPagamento FormaPagamento){
         System.out.println("Iniciando processo de inserção de fornecedor...");
-        String query = "insert into Forma_Pagamento(cartaocredito, cartaodebito, numerocartao, nomecartao, codigoseguranca)" +
-                                              " values (?, ?, ?, ?, ?)";
+        String query = "insert into Forma_Pagamento(cartaocredito, cartaodebito, numerocartao, nomecartao, vencimento, codigoseguranca, parcelas)" +
+                                              " values (?, ?, ?, ?, ?, ?, ?)";
         
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -34,7 +34,9 @@ public class FormaPagamentoDAO {
             preparedStatement.setString(2, FormaPagamento.getCartaodebito());
             preparedStatement.setString(3, FormaPagamento.getNumerocartao());
             preparedStatement.setString(4, FormaPagamento.getNomecartao());
-            preparedStatement.setString(5, FormaPagamento.getCodigoseguranca());
+            preparedStatement.setString(5, FormaPagamento.getVencimento());
+            preparedStatement.setString(6, FormaPagamento.getCodigoseguranca());
+            preparedStatement.setString(7, FormaPagamento.getParcelas());
 
             preparedStatement.executeUpdate();
             

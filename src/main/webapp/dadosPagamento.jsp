@@ -5,6 +5,8 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -21,7 +23,7 @@
             </div>
             <div class="row">
                     <div class="col-12 col-sm-2" align="center">
-                        <h6>Tipo de Cartão</h6>
+                        <h6>Tipo de Cartão*</h6>
                         <label class="hEnd">Crédito</label>
                         <input class="form-check" type="radio" name="cartao" value="cartaocredito" checked/>
          
@@ -51,18 +53,18 @@
                             class="form-control" placeholder="DD/YY" size="5"/>
                 </div>
                 <div class="col-12 col-sm-8">
-                    <label>Parcelas *</label>
+                    <label>Parcelas*</label>
                     <select class="form-control" name="parcelas">
-                        <option value="1x">1x s/ juros</option>
-                        <option value="2x">2x s/ juros</option>
-                        <option value="3x">3x s/ juros</option>
-                        <option value="4x">4x s/ juros</option>
-                        <option value="5x">5x s/ juros</option>
-                        <option value="6x">6x s/ juros</option>
-                        <option value="7x">7x s/ juros</option>
-                        <option value="8x">8x s/ juros</option>
-                        <option value="9x">9x s/ juros</option>
-                        <option value="10x">10x s/ juros</option>
+                        <option value="1x">1x de <fmt:setLocale value = "pt-BR"/> <fmt:formatNumber value="${valortotal}" type="currency"/> s/ juros</option>
+                        <option value="2x">2x de <fmt:setLocale value = "pt-BR"/> <fmt:formatNumber value="${valortotal/2}" type="currency"/> s/ juros</option>
+                        <option value="3x">3x de <fmt:setLocale value = "pt-BR"/> <fmt:formatNumber value="${valortotal/3}" type="currency"/> s/ juros</option>
+                        <option value="4x">4x de <fmt:setLocale value = "pt-BR"/> <fmt:formatNumber value="${valortotal/4}" type="currency"/> s/ juros</option>
+                        <option value="5x">5x de <fmt:setLocale value = "pt-BR"/> <fmt:formatNumber value="${valortotal/5}" type="currency"/> s/ juros</option>
+                        <option value="6x">6x de <fmt:setLocale value = "pt-BR"/> <fmt:formatNumber value="${valortotal/6}" type="currency"/> s/ juros</option>
+                        <option value="7x">7x de <fmt:setLocale value = "pt-BR"/> <fmt:formatNumber value="${valortotal/7}" type="currency"/> s/ juros</option>
+                        <option value="8x">8x de <fmt:setLocale value = "pt-BR"/> <fmt:formatNumber value="${valortotal/8}" type="currency"/> s/ juros</option>
+                        <option value="9x">9x de <fmt:setLocale value = "pt-BR"/> <fmt:formatNumber value="${valortotal/9}" type="currency"/> s/ juros</option>
+                        <option value="10x">10x de <fmt:setLocale value = "pt-BR"/> <fmt:formatNumber value="${valortotal/10}" type="currency"/> s/ juros </option>
                     </select>
                 </div>
             </div>

@@ -22,7 +22,7 @@ public class ServicoFormaPagamento {
     FormaPagamentoDAO formapagamendoDAO = new FormaPagamentoDAO();
     
     //Insere um Produto na fonte de dados
-    public Integer cadastrarEnderecoEntrega(FormaPagamento formapagamento) throws EnderecoEntregaException, DataSourceException {
+    public Integer cadastrarFormaPagamento(FormaPagamento formapagamento) throws EnderecoEntregaException, DataSourceException {
         try {
             return formapagamendoDAO.inserirFormaPagamento(formapagamento);
         } catch (Exception e) {

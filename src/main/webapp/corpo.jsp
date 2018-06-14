@@ -2,6 +2,7 @@
 <%@page import="java.util.List"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <% HttpSession sessao = request.getSession(); %>
 <!DOCTYPE html>
 <html lang="pt-br" xmlns:th="http://www.thymeleaf.org">
@@ -38,8 +39,8 @@
                             <p class="card-title d-flex justify-content-center"><c:out value="${produto.nome}"/></p>
                         </div>
                         <div class="card-text text-center">
-                            <h6 class="card-text d-flex justify-content-center"><c:out value="R$ ${produto.precovenda}"/></h6>
-                            <h6>Parcelado em até 10x sem juros de <c:out value="R$ ${produto.precovenda/10}"/></h6>
+                            <h6 class="card-text d-flex justify-content-center"><fmt:setLocale value = "pt-BR"/> <fmt:formatNumber value="${produto.precovenda}" type="currency"/></h6>
+                            <h6>Parcelado em até 10x sem juros de <fmt:setLocale value = "pt-BR"/> <fmt:formatNumber value="${produto.precovenda/10}" type="currency"/></h6>
                         </div>
                         <br>
                         <div class="card-text">
