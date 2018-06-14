@@ -16,11 +16,30 @@ public class FormaPagamento {
     private String numerocartao;
     private String nomecartao;
     private String codigoseguranca;
+    private String parcelas;
+    private String vencimento;
 
     public FormaPagamento() {
         super();
     }
 
+    public String getParcelas() {
+        return parcelas;
+    }
+
+    public void setParcelas(String parcelas) {
+        this.parcelas = parcelas;
+    }
+
+    public String getVencimento() {
+        return vencimento;
+    }
+
+    public void setVencimento(String vencimento) {
+        this.vencimento = vencimento;
+    }
+    
+    
     public int getCodigo() {
         return codigo;
     }

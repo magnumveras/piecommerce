@@ -20,33 +20,56 @@
                 <hr>
             </div>
             <div class="row">
-                    <div class="col-12 col-sm-1" align="center">
+                    <div class="col-12 col-sm-2" align="center">
+                        <h6>Tipo de Cartão</h6>
                         <label class="hEnd">Crédito</label>
-                        <input class="form-check" type="radio" name="cartao" value="1" checked/>
-                    </div>
-                    <div class="col-12 col-sm-1" align="center">
+                        <input class="form-check" type="radio" name="cartao" value="cartaocredito" checked/>
+         
                         <label class="hEnd">Débito</label>
-                        <input class="form-check" type="radio" name="cartao" value="1"/>
+                        <input class="form-check" type="radio" name="cartao" value="cartaodebito"/>
                     </div>
                     <div class="col-12 col-sm-4">
-                        <label class="hEnd">Número do Cartão</label>
+                        <label class="hEnd">Número do Cartão*</label>
                         <input type="number" name="numerocartao" value=""
                             class="form-control" placeholder="Número do Cartão" size="30"/>
                     </div>
                     <div class="col-12 col-sm-4">
-                        <label class="hEnd">Nome no Cartão</label>
+                        <label class="hEnd">Nome no Cartão*</label>
                         <input type="number" name="nomecartao" value=""
                             class="form-control" placeholder="Nome no Cartão" size="20"/>
                     </div>
                     <div class="col-12 col-sm-2">
-                        <label class="hEnd">Código de Segurança</label>
+                        <label class="hEnd">Cod Seg. *</label>
                         <input type="number" name="codigoseguranca" value=""
                             class="form-control" placeholder="cod" size="3"/>
                     </div>
             </div>
             <div class="row">
+                <div class="col-12 col-sm-4">
+                    <label>Vencimento*</label>
+                    <input type="number" name="vencimento" 
+                            class="form-control" placeholder="DD/YY" size="5"/>
+                </div>
+                <div class="col-12 col-sm-8">
+                    <label>Parcelas *</label>
+                    <select class="form-control" name="parcelas">
+                        <option value="1x">1x s/ juros</option>
+                        <option value="2x">2x s/ juros</option>
+                        <option value="3x">3x s/ juros</option>
+                        <option value="4x">4x s/ juros</option>
+                        <option value="5x">5x s/ juros</option>
+                        <option value="6x">6x s/ juros</option>
+                        <option value="7x">7x s/ juros</option>
+                        <option value="8x">8x s/ juros</option>
+                        <option value="9x">9x s/ juros</option>
+                        <option value="10x">10x s/ juros</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-12" align="right">
                     <br>
+                    <input type="hidden" name="pagamentos" value="pagamentos" />
                     <button class="btn btn-outline-primary bInfo bVoltar" type="button" onclick="window.location.href='enderecoEntrega.jsp'">Voltar</button>
                     <button class="btn btn-outline-primary bInfo" type="submit">Confirmar</button> 
                 </div>

@@ -75,8 +75,8 @@ CREATE TABLE Imagem(
 
 CREATE TABLE Produto (
     codigo INTEGER NOT NULL AUTO_INCREMENT,
-    nome VARCHAR(70) NOT NULL,
-    descricao VARCHAR(200) NOT NULL,
+    nome VARCHAR(500) NOT NULL,
+    descricao VARCHAR(2000) NOT NULL,
     codigofornecedor INTEGER NOT NULL,
     codigocategoria INTEGER NOT NULL,
     precocompra DECIMAL(8,2) NOT NULL,

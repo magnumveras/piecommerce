@@ -22,12 +22,12 @@
             </div>
             <div class="row">
                     <div class="col-12 col-sm-6">
-                        <label class="hEnd">Endereço</label>
+                        <label class="hEnd">Endereço*</label>
                         <input type="text" name="endereco" value="${ClienteEndereco.getEndereco()}" placeholder="Endereço"
                             class="form-control" onkeydown="javascript: fMasc(this, soLetras);" required oninvalid="this.setCustomValidity('Preencha o Endereço')" oninput="setCustomValidity('')" maxlength="70" size="60"/>
                     </div>
                     <div class="col-12 col-sm-2">
-                        <label class="hEnd">Número</label>
+                        <label class="hEnd">Número*</label>
                         <input type="text" name="numero" value="${ClienteEndereco.getNumero()}"
                             class="form-control" required oninvalid="this.setCustomValidity('Preencha o número')" oninput="setCustomValidity('')" maxlength="10" placeholder="Nº" size="10"/>
                     </div>
@@ -39,14 +39,14 @@
             </div>
             <div class="row">
                     <div class="col-12 col-sm-3">
-                        <label class="hEnd">CEP</label>
+                        <label class="hEnd">CEP*</label>
                         <input type="text" name="cep" value="${ClienteEndereco.getCep()}"
                             size="10"
                             maxlength="9" onblur="checarCEP();"
                             class="form-control" onkeypress="return MM_formtCep(event, this, '#####-###');" placeholder="Ex 00000-000" required oninvalid="this.setCustomValidity('Preencha o CEP')" oninput="setCustomValidity('')"/>
                     </div>
                     <div class="col-12 col-sm-3">
-                        <label class="hEnd">Bairro</label>
+                        <label class="hEnd">Bairro*</label>
                         <input type="text" name="bairro" value="${ClienteEndereco.getBairro()}"
                             class="form-control" required oninvalid="this.setCustomValidity('Preencha o bairro')" oninput="setCustomValidity('')" maxlength="10" placeholder="Bairro" size="10"/>
                     </div>
@@ -84,7 +84,7 @@
                             </select>
                     </div>
                     <div class="col-12 col-sm-3">
-                        <label class="hEnd">Cidade</label>
+                        <label class="hEnd">Cidade*</label>
                         <input type="hidden" name="endrecook" value="endrecook" />
                         <input type="text" name="cidade" value="${ClienteEndereco.getCidade()}"
                             placeholder="Cidade" size="30"

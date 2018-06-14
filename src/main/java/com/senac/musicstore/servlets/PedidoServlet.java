@@ -9,6 +9,7 @@ package com.senac.musicstore.servlets;
 import com.senac.musicstore.model.Carrinho;
 import com.senac.musicstore.model.Cliente;
 import com.senac.musicstore.model.EnderecoEntrega;
+import com.senac.musicstore.model.FormaPagamento;
 import com.senac.musicstore.model.ItemCarrinho;
 import com.senac.musicstore.model.ItemPedido;
 import com.senac.musicstore.model.Pedido;
@@ -125,6 +126,30 @@ public class PedidoServlet extends HttpServlet {
                     }
              
                 }else if (sessao.getAttribute("dadosPagamento") == null){
+                    
+                    String verificapagamento = request.getParameter("pagamentos");
+                    
+                    if(verificapagamento != null){
+                        sessao.setAttribute("dadosPagamento", "ok");
+                        
+                        String tipocartao = request.getParameter("cartao");
+                        String numerocartao = request.getParameter("numerocartao");
+                        String nomecartao = request.getParameter("nomecartao");
+                        String codigoseguranca = request.getParameter("codigoseguranca");
+                        
+                        FormaPagamento forma = new FormaPagamento();
+                        
+                        if(tipocartao.equalsIgnoreCase("cartaocredito")){
+                            forma.setCartaocredito("1");
+                        }else if(tipocartao.equalsIgnoreCase("cartaodebito")){
+                            forma.setCartaodebito("1");
+                        }
+                        
+                        forma.setNumerocartao(numerocartao);
+                        forma.setNomecartao(nomecartao);
+                        forma.setCodigoseguranca(codigoseguranca);
+
+                    }
                     
                     response.sendRedirect(request.getContextPath() + "/dadosPagamento.jsp");
                 }else{
