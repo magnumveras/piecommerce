@@ -194,7 +194,7 @@
                             </a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link" href="consultaVendasop.jsp" role="button" aria-haspopup="true" aria-expanded="false">
                                 Vendas
                             </a>
                         </li>
