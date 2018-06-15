@@ -90,10 +90,17 @@
                 <div class="col-12 form-inline">
                     <button class="btn btn-outline-primary bInfo bVoltar" onclick="window.location.href='consultaPedidosop.jsp'">Voltar</button>
                     &nbsp
-                    <form action="${pageContext.request.contextPath}/finalizarfaturar" method="post" >
-                        <input type="hidden" name="codigopedido" value="${pedidofatura.getCodigo()}"/>
-                        <button type="submit" class="btn btn-success center-block">Faturar</button>
-                    </form>
+                    <c:choose>
+                        <c:when test="${empty Faturado}">
+                            <form action="${pageContext.request.contextPath}/finalizarfaturar" method="post" >
+                            <input type="hidden" name="codigopedido" value="${pedidofatura.getCodigo()}"/>
+                                <button type="submit" class="btn btn-success center-block">Faturar</button>
+                            </form>
+                        </c:when>
+                        <c:otherwise>
+                            <h5 style="color:green">Pedido Faturado</h5>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>

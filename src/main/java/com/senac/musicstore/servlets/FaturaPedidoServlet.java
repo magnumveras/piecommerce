@@ -81,7 +81,11 @@ public class FaturaPedidoServlet extends HttpServlet {
         } catch (Exception e) {
         }
         
-        
+        if(p.getCodigovenda() > 0){
+            sessao.setAttribute("Faturado", "Faturado");
+        }else{
+            sessao.removeAttribute("Faturado");
+        }
         
         sessao.setAttribute("pedidofatura", p);
         sessao.setAttribute("clientefatura", c);

@@ -43,17 +43,16 @@
     <body>
         <jsp:include page="topo.jsp"/> 
         <div class="container" align="center">
+            <h3>Consulta de Cliente</h3>
+            
+            <label for="nome">Cliente: </label>
+   
             <div class="row">
-                <div class="col-12">
-                <h3>Consulta de Cliente</h3>
-                <!--<div class="well">-->
+                <div class="col-12 col-sm-10">
+                    <form class="form-group-md" action="${pageContext.request.contextPath}/clientes" method="post">
+                        <input type="text" class="form-control" name="cliente" placeholder="Digite nome Cliente" maxlength="70"/>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <form class="form-inline" action="${pageContext.request.contextPath}/clientes" method="post">
-                        <label for="nome">Cliente: </label>
-                        <input type="text" class="form-control" name="cliente" placeholder="Digite nome Cliente" maxlength="30"/>
+                <div class="col-12 col-sm-2">
                         <button type="submit" class="btn btn-success center-block">Pesquisar</button>
                     </form>
                 </div>
