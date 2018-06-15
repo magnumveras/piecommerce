@@ -24,40 +24,13 @@ import javax.servlet.http.HttpSession;
  *
  * @author magno
  */
-@WebServlet(name = "AlterarClienteServlet", urlPatterns = {"/alterarCliente"})
-public class AlterarClienteServlet extends HttpServlet {
+@WebServlet(name = "ConsultaClienteMenuServlet", urlPatterns = {"/consultaalteracliente"})
+public class ConsultaClienteMenuServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-         String destino;
-        
-        HttpSession sessao = request.getSession();
-        if (sessao.getAttribute("cliente") != null) {
-            request.setAttribute("cliente", sessao.getAttribute("cliente"));
-            // Remove o atributo da sessao para usuario nao ficar preso na tela de resultados
-            sessao.removeAttribute("cliente");
-            
-            if(sessao.getAttribute("clientemenu") == null){
-               destino = "/clientes"; 
-            }else{
-                destino = "index.jsp";
-                sessao.removeAttribute("clientemenu");
-            }
-            
-            sessao.removeAttribute("Altera");
-        } else {
-            destino = "cadastroCliente.jsp";
-        }
-        
-        RequestDispatcher dispatcher = request.getRequestDispatcher(destino);
-        dispatcher.forward(request, response);
-    }
-
-    @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        //Instância Objeto Cliente
+              //Instância Objeto Cliente
         Cliente cliente = new Cliente();
         Usuario usuario = new Usuario();
         
@@ -91,6 +64,7 @@ public class AlterarClienteServlet extends HttpServlet {
             sessao.setAttribute("cli", cliente);
             sessao.setAttribute("usu", usuario);
             sessao.setAttribute("Altera", "alteracao");
+            sessao.setAttribute("clientemenu", "clientemenu");
             response.sendRedirect(request.getContextPath() + "/cadastroCliente.jsp");
             
         }else{
@@ -229,6 +203,12 @@ public class AlterarClienteServlet extends HttpServlet {
         }
         
         response.sendRedirect(request.getContextPath() + "/alterarCliente");
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+  
     }
 
 }

@@ -198,11 +198,11 @@
                                 Vendas
                             </a>
                         </li>
-                        <li class="nav-item dropdown">
+                        <!--<li class="nav-item dropdown">
                             <a class="nav-link" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Relatórios
                             </a>
-                        </li>
+                        </li>-->
                     </ul>
                 </div>
             </nav>
@@ -219,7 +219,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            <a class="nav-link" name="cpfcliente"  href="consultaalteracliente?&cpfcliente=${clientecarrinho.getCpf()}" role="button" aria-haspopup="true" aria-expanded="true">
                                 Dados
                             </a>
                         </li>

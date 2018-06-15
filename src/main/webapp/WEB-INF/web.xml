@@ -21,6 +21,10 @@
         <servlet-name>InserirCarrinhoServlet</servlet-name>
         <servlet-class>com.senac.musicstore.servlets.InserirCarrinhoServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ConsultaClienteMenuServlet</servlet-name>
+        <servlet-class>com.senac.musicstore.servlets.ConsultaClienteMenuServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ConsultaProdutoServlet</servlet-name>
         <url-pattern>/consultaprodutos</url-pattern>
@@ -40,6 +44,10 @@
     <servlet-mapping>
         <servlet-name>InserirCarrinhoServlet</servlet-name>
         <url-pattern>/inserircarrinho</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConsultaClienteMenuServlet</servlet-name>
+        <url-pattern>/consultaalteracliente</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
