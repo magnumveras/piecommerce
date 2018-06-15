@@ -214,7 +214,7 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link" href="consultaPedidoscli.jsp" role="button" aria-haspopup="true" aria-expanded="false">
                                 Compras
                             </a>
                         </li>

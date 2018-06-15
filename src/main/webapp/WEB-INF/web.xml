@@ -25,6 +25,10 @@
         <servlet-name>ConsultaClienteMenuServlet</servlet-name>
         <servlet-class>com.senac.musicstore.servlets.ConsultaClienteMenuServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ConsultaPedidosCliServlet</servlet-name>
+        <servlet-class>com.senac.musicstore.servlets.ConsultaPedidosCliServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>ConsultaProdutoServlet</servlet-name>
         <url-pattern>/consultaprodutos</url-pattern>
@@ -48,6 +52,10 @@
     <servlet-mapping>
         <servlet-name>ConsultaClienteMenuServlet</servlet-name>
         <url-pattern>/consultaalteracliente</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ConsultaPedidosCliServlet</servlet-name>
+        <url-pattern>/consultapedidoscli</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

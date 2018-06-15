@@ -82,4 +82,14 @@ public class ServicoPedido {
         }
     }
     
+        //Insere um Produto na fonte de dados
+    public List<Pedido> ConsultarPedidosCliente(Integer CodigoCliente) throws PedidoException, DataSourceException, ItemPedidoException {
+        try {
+            return pedidoDAO.consultarPedidosCliente(CodigoCliente);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DataSourceException("Erro na fonte de dados", e);
+        }
+    }
+    
 }

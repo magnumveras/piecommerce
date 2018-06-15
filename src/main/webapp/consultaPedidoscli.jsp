@@ -19,8 +19,9 @@
             <h3>Pedidos</h3>
             <div class="row">
                     <div class="col-12" align="center">
-                        <form class="form-group-md" action="${pageContext.request.contextPath}/consultapedidos" method="post">
-                            <button type="submit" class="btn btn-success center-block">PEDIDOS</button>
+                        <form class="form-group-md" action="${pageContext.request.contextPath}/consultapedidoscli" method="post">
+                            <input type="hidden" name="codigocliente" value="${clientecarrinho.getId()}" />
+                            <button type="submit" class="btn btn-success center-block">Acesso Compras</button>
                         </form>    
                     </div>
             </div>
@@ -53,7 +54,7 @@
                                         <div class="form-group">
                                             <form action="${pageContext.request.contextPath}/faturarpedido" method="post" >
                                                 <input type="hidden" name="codigopedido" value="${pedido.getCodigo()}"/>
-                                                <button type="submit" class="btn btn-success center-block">Faturar</button>
+                                                <button type="submit" class="btn btn-success center-block">Detalhes</button>
                                             </form>
                                         </div>  
                                     </td>
