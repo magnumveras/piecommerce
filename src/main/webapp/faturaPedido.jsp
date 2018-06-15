@@ -91,6 +91,7 @@
                     <button class="btn btn-outline-primary bInfo bVoltar" onclick="window.location.href='consultaPedidosop.jsp'">Voltar</button>
                     &nbsp
                     <form action="${pageContext.request.contextPath}/finalizarfaturar" method="post" >
+                        <input type="hidden" name="codigopedido" value="${pedidofatura.getCodigo()}"/>
                         <button type="submit" class="btn btn-success center-block">Faturar</button>
                     </form>
                 </div>

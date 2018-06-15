@@ -7,10 +7,14 @@ package com.senac.musicstore.service;
 
 import com.senac.musicstore.dao.ItemPedidoDAO;
 import com.senac.musicstore.dao.PedidoDAO;
+import com.senac.musicstore.dao.VendaDAO;
 import com.senac.musicstore.exceptions.DataSourceException;
 import com.senac.musicstore.exceptions.ItemPedidoException;
+import com.senac.musicstore.exceptions.ItemVendaException;
 import com.senac.musicstore.exceptions.PedidoException;
+import com.senac.musicstore.exceptions.VendaException;
 import com.senac.musicstore.model.Pedido;
+import com.senac.musicstore.model.Venda;
 import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -19,15 +23,15 @@ import java.util.List;
  *
  * @author magno
  */
-public class ServicoPedido {
-    public static List<Pedido> listaPedidos = new ArrayList<>();
-    PedidoDAO pedidoDAO = new PedidoDAO();
-    ItemPedidoDAO itemPedidoDAO = new ItemPedidoDAO();
+public class ServicoVenda {
+    public static List<Venda> listavendas = new ArrayList<>();
+    VendaDAO vendadao = new VendaDAO();
+    ItemPedidoDAO item = new ItemPedidoDAO();
     
     //Insere um Produto na fonte de dados
-    public Integer cadastrarPedido(Pedido pedido) throws PedidoException, DataSourceException, ItemPedidoException {
+    public Integer cadatrarVenda(Venda venda) throws VendaException, DataSourceException, ItemVendaException {
         try {
-            return pedidoDAO.cadastrarPedido(pedido);
+            return vendadao.cadastrarVenda(venda);
         } catch (Exception e) {
             e.printStackTrace();
             throw new DataSourceException("Erro na fonte de dados", e);
@@ -35,9 +39,9 @@ public class ServicoPedido {
     }
     
     //Insere um Produto na fonte de dados
-    public Pedido ConsultarPedido(Integer Codigo) throws PedidoException, DataSourceException, ItemPedidoException {
+    public Venda ConsultarVenda(Integer Codigo) throws VendaException, DataSourceException, ItemVendaException {
         try {
-            return pedidoDAO.consultarPedido(Codigo);
+            return vendadao.consultarVenda(Codigo);
         } catch (Exception e) {
             e.printStackTrace();
             throw new DataSourceException("Erro na fonte de dados", e);
@@ -45,10 +49,10 @@ public class ServicoPedido {
     }
     
         //Retorna Carrinho
-   public List<Pedido> listavendas(Date datainicial, Date datafinal) throws PedidoException, DataSourceException, ItemPedidoException, Exception{
+   public List<Venda> listavendas(Date datainicial, Date datafinal) throws VendaException, DataSourceException, ItemVendaException, Exception{
         
         try {
-            return pedidoDAO.listarPedidos(datainicial, datafinal);
+            return vendadao.listarVendasPeriodo(datainicial, datafinal);
             //return vendaDAO.(codigocarrinho);
         } catch (Exception e) {
             e.printStackTrace();
@@ -56,27 +60,12 @@ public class ServicoPedido {
         }
     }
     
-   public List<Pedido> listarPedidosTotais() throws PedidoException, DataSourceException, ItemPedidoException, Exception{
+   public List<Venda> listarvendastotais() throws VendaException, DataSourceException, ItemVendaException, Exception{
         
         try {
-            return pedidoDAO.listarPedidosTotais();
+            return vendadao.listarVendasTotais();
             //return vendaDAO.(codigocarrinho);
         } catch (Exception e) {
-            e.printStackTrace();
-            throw new DataSourceException("Erro na fonte de dados", e);
-        }
-    }
-   
-     //Atualiza um cliente na fonte de dados
-    public void atualizarPedido(int codigovenda, int codigopedido) throws PedidoException, DataSourceException, Exception {
-        
-        //ValidadorCliente.validar(cliente);
-
-        try {
-            pedidoDAO.atualizarPedido(codigovenda, codigopedido);
-        } catch (Exception e) {
-            //Imprime qualquer erro técnico no console e devolve
-            //uma exceção e uma mensagem amigável a camada de visão
             e.printStackTrace();
             throw new DataSourceException("Erro na fonte de dados", e);
         }

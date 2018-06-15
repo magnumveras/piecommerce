@@ -1,6 +1,9 @@
+package com.senac.musicstore.model.validador;
+
 
 import com.senac.musicstore.exceptions.PedidoException;
 import com.senac.musicstore.model.Pedido;
+import com.senac.musicstore.model.Venda;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -14,10 +17,10 @@ import com.senac.musicstore.model.Pedido;
  */
 public class ValidadorVenda {
     
-    public static void validar(Pedido pedido) throws PedidoException{
+    public static void validar(Venda venda) throws PedidoException{
         //Realização de Validações de Negocio
-        if(pedido == null){
-            throw new PedidoException("Não foi informado o pedido");
+        if(venda == null){
+            throw new PedidoException("Não foi informada a venda");
         }
         
     }
