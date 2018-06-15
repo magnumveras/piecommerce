@@ -12,6 +12,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Music Store - Forma de Pagamento</title>
+        <script type="text/javascript" src="js/programa.js"></script>
     </head>
     <body>
         <div class="container">
@@ -33,24 +34,28 @@
                     <div class="col-12 col-sm-4">
                         <label class="hEnd">Número do Cartão*</label>
                         <input type="number" name="numerocartao" value=""
-                            class="form-control" placeholder="Número do Cartão" size="30"/>
+                            class="form-control" placeholder="Número do Cartão" size="30"
+                            required oninvalid="this.setCustomValidity('Preencha o número')" oninput="setCustomValidity('')" maxlength="30"/>
                     </div>
                     <div class="col-12 col-sm-4">
                         <label class="hEnd">Nome no Cartão*</label>
-                        <input type="number" name="nomecartao" value=""
-                            class="form-control" placeholder="Nome no Cartão" size="20"/>
+                        <input type="text" name="nomecartao" value=""
+                            class="form-control" placeholder="Nome no Cartão" size="20"
+                            required oninvalid="this.setCustomValidity('Preencha o nome')" oninput="setCustomValidity('')" maxlength="20"/>
                     </div>
                     <div class="col-12 col-sm-2">
                         <label class="hEnd">Cod Seg. *</label>
                         <input type="number" name="codigoseguranca" value=""
-                            class="form-control" placeholder="cod" size="3"/>
+                            class="form-control" placeholder="cod" size="3"
+                            required oninvalid="this.setCustomValidity('Preencha o código')" oninput="setCustomValidity('')" maxlength="3"/>
                     </div>
             </div>
             <div class="row">
                 <div class="col-12 col-sm-4">
                     <label>Vencimento*</label>
-                    <input type="number" name="vencimento" 
-                            class="form-control" placeholder="DD/YY" size="5"/>
+                    <input type="text" name="vencimento" 
+                            class="form-control" placeholder="DD/YY" size="5"
+                            required oninvalid="this.setCustomValidity('Preencha o vencimento')" oninput="setCustomValidity('')" maxlength="5"/>
                 </div>
                 <div class="col-12 col-sm-8">
                     <label>Parcelas*</label>
