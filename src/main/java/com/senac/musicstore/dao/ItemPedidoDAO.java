@@ -49,11 +49,7 @@ public class ItemPedidoDAO {
     public List<ItemPedido> listarPedidoeItens(int codigopedido){ //retorna todos itens
         List<ItemPedido> lista = new ArrayList<>();
         System.out.println("Buscando produto na base de dados...");
-        String query = "Select v.codigovenda as codigovenda, p.codigo as codigoproduto,p.nome, p.descricao as descricao,\n" +
-                       "       c.nome as categoria, v.quantidade, p.precovenda from itemvenda as v\n" +
-                       "       inner join produtos p on p.CODIGO = v.CODIGOPRODUTO\n" +
-                       "       inner join categoria c on c.CODIGO = p.CODIGOCATEGORIA\n" +
-                       "where codigovenda = ?";
+        String query = "Select * from itempedido where codigopedido = ?";
         
         try {
             PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
@@ -64,22 +60,46 @@ public class ItemPedidoDAO {
 
             
                 while (rs.next()){
-                    ItemPedido itemvenda = new ItemPedido();
-                    itemvenda.setCodigopedido(rs.getInt(1));
-                    itemvenda.setCodigoProduto(rs.getInt(2));
-                    itemvenda.setNomeproduto(rs.getString(3));
-                    itemvenda.setDescricaoproduto(rs.getString(4));
-                    itemvenda.setNomecategoria(rs.getString(5));
-                    itemvenda.setQuantidade(rs.getInt(6));
-                    itemvenda.setPrevovenda(rs.getDouble(7));
-                    lista.add(itemvenda);
+                    ItemPedido item = new ItemPedido();
+                    item.setCodigopedido(rs.getInt(1));
+                    item.setCodigopedido(rs.getInt(2));
+                    item.setCodigoproduto(rs.getInt(3));
+                    item.setQuantidade(rs.getInt(4));
+                    lista.add(item);
                 }
 
             System.out.println("Busca efetuada com sucesso");
         } catch (SQLException ex) {
-            System.out.println("Erro ao buscar Itens da venda: "+ex);
+            System.out.println("Erro ao buscar Itens do Pedido: "+ex);
         }        
         return lista;
     
+    }
+
+    public List<ItemPedido> listarItensPedidos() {
+        List<ItemPedido> lista = new ArrayList<>();
+        System.out.println("Buscando produto na base de dados...");
+        String query = "Select * from itempedido";
+        
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            
+            ResultSet rs = preparedStatement.executeQuery();
+
+            
+                while (rs.next()){
+                    ItemPedido itemPedido = new ItemPedido();
+                    itemPedido.setCodigo(rs.getInt(1));
+                    itemPedido.setCodigopedido(rs.getInt(2));
+                    itemPedido.setCodigoProduto(rs.getInt(3));
+                    itemPedido.setQuantidade(rs.getInt(4));
+                    lista.add(itemPedido);
+                }
+
+            System.out.println("Busca efetuada com sucesso");
+        } catch (SQLException ex) {
+            System.out.println("Erro ao buscar Itens da pedido: "+ex);
+        }        
+        return lista;
     }
 }

@@ -11,6 +11,7 @@ import com.senac.musicstore.dao.EnderecoEntregaDAO;
 import com.senac.musicstore.exceptions.DataSourceException;
 import com.senac.musicstore.exceptions.EnderecoEntregaException;
 import com.senac.musicstore.model.EnderecoEntrega;
+import java.util.List;
 /**
  *
  * @author magno
@@ -29,5 +30,26 @@ public class ServicoEnderecoEntrega {
         }
     }
     
-    
+      public List<EnderecoEntrega> listarEnderecos() throws DataSourceException, Exception {
+        try {
+            return enderecoEntregaDAO.listarEnderecos();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DataSourceException("Erro na fonte de dados", e);
+            
+        }
+    }
+      
+      public EnderecoEntrega consultaEndereco(int codigo) throws DataSourceException, Exception {
+        EnderecoEntrega ee = new EnderecoEntrega();
+          try {
+            ee = enderecoEntregaDAO.consultaEndereco(codigo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DataSourceException("Erro na fonte de dados", e);
+            
+        }
+          return ee;
+    }
 }

@@ -56,4 +56,15 @@ public class ServicoPedido {
         }
     }
     
+   public List<Pedido> listarPedidosTotais() throws PedidoException, DataSourceException, ItemPedidoException, Exception{
+        
+        try {
+            return pedidoDAO.listarPedidosTotais();
+            //return vendaDAO.(codigocarrinho);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DataSourceException("Erro na fonte de dados", e);
+        }
+    }
+    
 }

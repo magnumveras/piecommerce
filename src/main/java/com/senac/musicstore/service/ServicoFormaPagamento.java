@@ -13,6 +13,7 @@ import com.senac.musicstore.exceptions.DataSourceException;
 import com.senac.musicstore.exceptions.EnderecoEntregaException;
 import com.senac.musicstore.model.EnderecoEntrega;
 import com.senac.musicstore.model.FormaPagamento;
+import java.util.List;
 /**
  *
  * @author magno
@@ -31,5 +32,26 @@ public class ServicoFormaPagamento {
         }
     }
     
+    public List<FormaPagamento> listarpagamentos() throws DataSourceException, Exception {
+        try {
+            return formapagamendoDAO.listarpagamentos();
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DataSourceException("Erro na fonte de dados", e);
+            
+        }
+    }
     
+    public FormaPagamento consultaPagamento(int codigo) throws DataSourceException, Exception {
+        FormaPagamento fp = new FormaPagamento();
+          try {
+            fp = formapagamendoDAO.consultaPagamento(codigo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DataSourceException("Erro na fonte de dados", e);
+            
+        }
+          return fp;
+    }
 }

@@ -5,52 +5,24 @@ package com.senac.musicstore.model;
  * @author geoinformacao
  */
 public class ItemPedido {
-    private int iditempedido;
+    private int codigo;
     private int codigopedido;
     private int codigoproduto; 
     private int quantidade;
-    private String nomecategoria;
-    private String nomeproduto;
-    private String descricaoproduto;
-    private Double prevovenda;
+
 
     public ItemPedido() {
         super();
     }
 
-    public String getDescricaoproduto() {
-        return descricaoproduto;
+    public int getCodigo() {
+        return codigo;
     }
 
-    public void setDescricaoproduto(String descricaoproduto) {
-        this.descricaoproduto = descricaoproduto;
-    }
-    
-    
-    public String getNomecategoria() {
-        return nomecategoria;
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
     }
 
-    public void setNomecategoria(String nomecategoria) {
-        this.nomecategoria = nomecategoria;
-    }
-
-    public String getNomeproduto() {
-        return nomeproduto;
-    }
-
-    public void setNomeproduto(String nomeproduto) {
-        this.nomeproduto = nomeproduto;
-    }
-
-    public Double getPrevovenda() {
-        return prevovenda;
-    }
-
-    public void setPrevovenda(Double prevovenda) {
-        this.prevovenda = prevovenda;
-    }
-    
     public int getCodigoProduto() {
         return codigoproduto;
     }
@@ -65,14 +37,6 @@ public class ItemPedido {
 
     public void setQuantidade(int quantidade) {
         this.quantidade = quantidade;
-    }
-
-    public int getIditempedido() {
-        return iditempedido;
-    }
-
-    public void setIditempedido(int iditempedido) {
-        this.iditempedido = iditempedido;
     }
 
     public int getCodigopedido() {

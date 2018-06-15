@@ -70,6 +70,18 @@ body {
     border-radius: 5px;
 }
 
+#menucliente{
+    margin-bottom: 15px;
+    background-color:black;
+    border-radius: 5px;
+}
+
+#menuoperador{
+    margin-bottom: 15px;
+    background-color:black;
+    border-radius: 5px;
+}
+
 #navbarSupportedContent {
     margin-bottom: 30px;
 }

@@ -116,4 +116,31 @@ public class PedidoDAO {
         return pedido;
        
     }
+
+    public List<Pedido> listarPedidosTotais() throws Exception {
+        String query = "select * from pedido";
+         
+         List<Pedido> listadepedidos = new ArrayList<>();
+         
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            
+            ResultSet rs = preparedStatement.executeQuery();
+            
+            while (rs.next()){
+                Pedido pedido = new Pedido();
+                
+                pedido.setCodigo(rs.getInt(1));
+                pedido.setCodigoCliente(rs.getInt(2));
+                pedido.setData(rs.getTimestamp(3));
+                pedido.setValorTotal(rs.getDouble(4));
+                listadepedidos.add(pedido);
+            }
+            
+        } catch (SQLException ex) {
+            throw new Exception("Erro ao listar carrinho", ex);
+        }
+          
+        return listadepedidos;
+    }
 }

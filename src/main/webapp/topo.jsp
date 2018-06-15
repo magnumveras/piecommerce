@@ -198,7 +198,7 @@
     </c:if>
     <c:if test="${not empty loginoperacao}">
         <div class="row">
-            <nav class="navbar navbar-expand navbar-light bg-light col-12">
+            <nav class="navbar navbar-expand col-12" id="menuoperador">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
@@ -220,7 +220,7 @@
                             </div>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link" href="@#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <a class="nav-link" href="consultaPedidosop.jsp" role="button" aria-haspopup="true" aria-expanded="false">
                                 Pedidos
                             </a>
                         </li>
@@ -241,7 +241,7 @@
     </c:if>
     <c:if test="${not empty logincliente}">
         <div class="row">
-            <nav class="navbar navbar-expand navbar-light bg-light col-12">
+            <nav class="navbar navbar-expand col-12" id="menucliente">
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item active">
@@ -259,7 +259,7 @@
             </nav>
         </div>
     </c:if>
-    <c:if test="${(empty loginoperacao ) || (empty esconde)}">
+    <c:if test="${empty loginoperacao}">
         <div class="row">
             <div id="carouselExampleIndicators" class="carousel slide col-12" data-ride="carousel">
                 <h2 style="display: none">Validação w3</h2>

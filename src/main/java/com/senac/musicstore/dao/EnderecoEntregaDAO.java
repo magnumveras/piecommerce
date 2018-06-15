@@ -12,6 +12,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -50,5 +52,63 @@ public class EnderecoEntregaDAO {
             System.out.println("Erro ao salvar Endereço de Entrega");
             return null;
         }
+    }
+
+    public List<EnderecoEntrega> listarEnderecos() {
+        List<EnderecoEntrega> lista = new ArrayList<>();
+        System.out.println("Buscando produto na base de dados...");
+        String query = "Select * from Endereco_Entrega";
+        
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            
+            ResultSet rs = preparedStatement.executeQuery();
+
+            
+                while (rs.next()){
+                    EnderecoEntrega endereco = new EnderecoEntrega();
+                    endereco.setCodigo(rs.getInt(1));
+                    endereco.setEndereco(rs.getString(2));
+                    endereco.setComplemento(rs.getString(3));
+                    endereco.setNumero(rs.getString(4));
+                    lista.add(endereco);
+                }
+
+            System.out.println("Busca efetuada com sucesso");
+        } catch (SQLException ex) {
+            System.out.println("Erro ao buscar endereços: "+ex);
+        }        
+        return lista;
+    }
+    
+        //busca endereço
+    public EnderecoEntrega consultaEndereco(int codigo){//retorna um item
+        EnderecoEntrega endereco = new EnderecoEntrega();
+        System.out.println("Buscando produto na base de dados...");
+        String query = "SELECT * FROM Endereco_Entrega WHERE codigo=?";//addicionar o % %
+        
+        try {
+            PreparedStatement preparedStatement = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+            preparedStatement.setInt(1,codigo);
+
+            ResultSet rs = preparedStatement.executeQuery();
+            
+            while (rs.next()){
+                endereco.setCodigo(rs.getInt(1));
+                endereco.setEndereco(rs.getString(2));
+                endereco.setComplemento(rs.getString(3));
+                endereco.setNumero(rs.getString(4));
+                endereco.setBairro(rs.getString(5));
+                endereco.setCidade(rs.getString(6));
+                endereco.setEstado(rs.getString(7));
+                endereco.setCep(rs.getString(8));
+            }
+            
+            System.out.println("Busca efetuada com sucesso");
+        } catch (SQLException ex) {
+            System.out.println("Erro ao buscar Endereço"+ex);
+        }        
+        return endereco;
+    
     }
 }

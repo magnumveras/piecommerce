@@ -31,9 +31,20 @@ public class ServicoItemPedido {
     }
     
     
-    public List<ItemPedido> listarItensVenda(int codigopedido) throws DataSourceException, Exception {
+    public List<ItemPedido> listarItensPedido(int codigopedido) throws DataSourceException, Exception {
         try {
             return itemPedidoDAO.listarPedidoeItens(codigopedido);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new DataSourceException("Erro na fonte de dados", e);
+            
+        }
+    }
+    
+    public List<ItemPedido> listarItensPedidos() throws DataSourceException, Exception {
+        try {
+            return itemPedidoDAO.listarItensPedidos();
             
         } catch (Exception e) {
             e.printStackTrace();
