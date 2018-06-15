@@ -52,7 +52,7 @@
                                     
                                     <td>
                                         <div class="form-group">
-                                            <form action="${pageContext.request.contextPath}/faturarpedido" method="post" >
+                                            <form action="${pageContext.request.contextPath}/detalhespedidoscli" method="post" >
                                                 <input type="hidden" name="codigopedido" value="${pedido.getCodigo()}"/>
                                                 <button type="submit" class="btn btn-success center-block">Detalhes</button>
                                             </form>
