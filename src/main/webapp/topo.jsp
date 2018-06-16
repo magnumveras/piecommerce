@@ -240,18 +240,18 @@
                 </ol>
                 <div class="carousel-inner">
                     <div class="carousel-item active fixedHeightImg">
-                        <img class="d-block w-100 h-80" src="imagens/carrossel6.jpg"alt="Primeiro Slide Boss Pedais">
+                        <img class="d-block w-100 h-80" style="max-height: 480px" src="imagens/carrossel6.jpg"alt="Primeiro Slide Boss Pedais">
                     </div>
                     <div class="carousel-item fixedHeightImg">
-                        <img class="d-block w-100 h-80" src="imagens/carrossel4.jpg"
+                        <img class="d-block w-100 h-80" style="max-height: 480px" src="imagens/carrossel4.jpg"
                              alt="Segundo Slide FlyingV Gibson">
                     </div>
                     <div class="carousel-item fixedHeightImg">
-                        <img class="d-block w-100 h-80" src="imagens/carrosel2.jpg"
+                        <img class="d-block w-100 h-80" style="max-height: 480px" src="imagens/carrosel2.jpg"
                              alt="Terceiro Slide Fender Telecaster">
                     </div>
                     <div class="carousel-item fixedHeightImg">
-                        <img class="d-block w-100 h-80" src="imagens/tama.jpg"
+                        <img class="d-block w-100 h-80" style="max-height: 480px" src="imagens/tama.jpg"
                              alt="Terceiro Slide Fender Telecaster">
                     </div>
 

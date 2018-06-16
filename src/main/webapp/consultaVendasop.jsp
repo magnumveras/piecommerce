@@ -43,8 +43,9 @@
                                     <td><c:out value="${venda.getCodigo()}"  /></td>
                                     <td><c:out value="${venda.getData()}" /></td>
                                     <c:forEach items="${listaclientes}" var="cliente">
-                                        <c:if test="${cliente.getId() eq venda.getCodigoCliente()}"></c:if>
+                                        <c:if test="${cliente.getId() eq venda.getCodigoCliente()}">
                                         <td><c:out value="${cliente.getNome()} ${cliente.getSobrenome()}" /></td>
+                                        </c:if>
                                     </c:forEach>
                                     <td><fmt:setLocale value = "pt-BR"/> <fmt:formatNumber value="${venda.getValorTotal()}" type="currency"/></td>
                                     
